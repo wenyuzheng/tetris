@@ -1,5 +1,3 @@
-import Cell from "./Cell";
-
 class Piece {
     constructor(newCellsArr) {
         this.pieceCells = newCellsArr;

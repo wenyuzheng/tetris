@@ -8,12 +8,12 @@ import _ from "lodash";
 const App = () => {
   const xMax = 10;
   const yMax = 14;
-  const xIndices = Array.from(Array(10), (_, i) => i + 1);
-  const yIndices = Array.from(Array(14), (_, i) => i + 1);
+  const xIndices = Array.from(Array(xMax), (_, i) => i + 1);
+  const yIndices = Array.from(Array(yMax), (_, i) => i + 1).reverse();
   const myBoard = new Board(new Piece([new Cell(3, 4), new Cell(3, 5), new Cell(4, 5)]), 
-    [new Cell(9, 13), new Cell(10, 9), new Cell(10, 10)], 10, 14)
+    [new Cell(6, 1), new Cell(7, 1), new Cell(7, 2)], xMax, yMax);
 
-  const [board, setBoard] = useState(myBoard);
+  const [board, setBoard] = useState(_.cloneDeep(myBoard));
 
   return <>
     <div className="App">
@@ -31,9 +31,14 @@ const App = () => {
         })
       })}
     </div>
+    <button onClick={() => console.log(myBoard.currPiece)}>click</button>
     <button onClick={() => {
-      myBoard.moveCurrPiece("down");
-      setBoard(_.cloneDeep(myBoard));
+      console.log(myBoard.currPiece)
+      setTimeout(() => {
+        myBoard.moveCurrPiece("down");
+      }, 5000)
+      // myBoard.moveCurrPiece("down");
+      // setBoard(_.cloneDeep(myBoard));
     }}>moveDown</button>
   </>
 }

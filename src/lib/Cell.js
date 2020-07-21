@@ -1,8 +1,15 @@
 class Cell {
-    constructor(newCellX, newCellY, isCenter=false) {
+    constructor(newCellX, newCellY, isCenter=false, color=this.randomColor()) {
         this.x = newCellX;
         this.y = newCellY;
         this.isCenter = isCenter;
+        this.color = color;
+    }
+
+    randomColor() {
+        const colors = ["red", "green", "blue", "yellow", "purple"];
+        const randomNumber = Math.floor(Math.random() * 5); 
+        return colors[randomNumber];
     }
 
     move(direction) {

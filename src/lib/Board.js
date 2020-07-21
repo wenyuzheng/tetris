@@ -33,11 +33,15 @@ class Board {
     }
     
     moveCurrPiece(direction) {
+        // console.log(this.currPiece);
         const pieceCopy = _.cloneDeep(this.currPiece);
+        // console.log(pieceCopy);
         pieceCopy.move(direction);
+        // console.log(this.isValid(pieceCopy), pieceCopy);
         if (this.isValid(pieceCopy)) {
             this.currPiece.move(direction);
         }
+        console.log("moved " + direction)
     }
     
     rotateCurrPiece(direction) {
