@@ -21,6 +21,15 @@ class Piece {
         return false;
     }
 
+    getCellAt(x,y) {
+        for (let i = 0; i < this.pieceCells.length; i++) {
+            if (this.pieceCells[i].x === x && this.pieceCells[i].y === y) {
+                return this.pieceCells[i];
+            }
+        }
+        return false;
+    }
+
     move(direction) {
         for (let i = 0; i < this.pieceCells.length; i++) {
             this.pieceCells[i].move(direction);

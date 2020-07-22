@@ -1,15 +1,9 @@
 class Cell {
-    constructor(newCellX, newCellY, isCenter=false, color=this.randomColor()) {
+    constructor(newCellX, newCellY, isCenter=false, color) {
         this.x = newCellX;
         this.y = newCellY;
         this.isCenter = isCenter;
         this.color = color;
-    }
-
-    randomColor() {
-        const colors = ["red", "green", "blue", "yellow", "purple"];
-        const randomNumber = Math.floor(Math.random() * 5); 
-        return colors[randomNumber];
     }
 
     move(direction) {
@@ -24,6 +18,13 @@ class Cell {
         const newVectorOB = new Cell(centerCell.x + vectorABRotatedLeft.x, centerCell.y + vectorABRotatedLeft.y)
         this.x = newVectorOB.x
         this.y = newVectorOB.y
+    }
+
+    hasReachedBottom() {
+        if (this.y = 1) {
+            return true
+        }
+        return false
     }
 }
 

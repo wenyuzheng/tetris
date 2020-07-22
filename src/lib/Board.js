@@ -17,6 +17,15 @@ class Board {
         return false;
     }
 
+    getCellAt(x, y) {
+        for (let i = 0; i < this.boardCells.length; i++) {
+            if (this.boardCells[i].x === x && this.boardCells[i].y === y) {
+                return this.boardCells[i];
+            }
+        }
+        return false;
+    }
+
     isValid(pieceCopy) {
         for (let i = 0; i < pieceCopy.pieceCells.length; i++) {
             if (1 > pieceCopy.pieceCells[i].x || 
@@ -33,15 +42,11 @@ class Board {
     }
     
     moveCurrPiece(direction) {
-        // console.log(this.currPiece);
         const pieceCopy = _.cloneDeep(this.currPiece);
-        // console.log(pieceCopy);
         pieceCopy.move(direction);
-        // console.log(this.isValid(pieceCopy), pieceCopy);
         if (this.isValid(pieceCopy)) {
             this.currPiece.move(direction);
         }
-        console.log("moved " + direction)
     }
     
     rotateCurrPiece(direction) {
