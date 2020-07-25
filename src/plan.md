@@ -22,3 +22,10 @@
     * moveRight()
     * moveDown()
     * moveRotateRight(center?) //later
+
+# To do: 
+1. auto down
+2. rotate at the top => out of bound [done]
+3. isPieceAtBottom: stack on existing piece also count [done]
+4. score when fill in one line
+5. end of game [done]

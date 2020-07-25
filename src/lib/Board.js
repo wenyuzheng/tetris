@@ -30,7 +30,8 @@ class Board {
         for (let i = 0; i < pieceCopy.pieceCells.length; i++) {
             if (1 > pieceCopy.pieceCells[i].x || 
                 pieceCopy.pieceCells[i].x > this.xMax || 
-                pieceCopy.pieceCells[i].y < 1) { return false; }
+                pieceCopy.pieceCells[i].y < 1 ||
+                pieceCopy.pieceCells[i].y > this.yMax ) { return false; }
             for (let j = 0; j < this.boardCells.length; j++) {
                 if (pieceCopy.pieceCells[i].x === this.boardCells[j].x &&
                     pieceCopy.pieceCells[i].y === this.boardCells[j].y) {
@@ -55,6 +56,21 @@ class Board {
         if (this.isValid(pieceCopy)) {
             this.currPiece.rotate(this.currPiece.centerCell, direction);
         }
+    }
+
+    isPieceAtBottom() {
+        for (let i = 0; i < this.currPiece.pieceCells.length; i++){
+            if (this.currPiece.pieceCells[i].y === 1) {
+                return true
+            }
+            for (let j = 0; j < this.boardCells.length; j++) {
+                if (this.currPiece.pieceCells[i].x === this.boardCells[j].x &&
+                    this.currPiece.pieceCells[i].y-1 === this.boardCells[j].y) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

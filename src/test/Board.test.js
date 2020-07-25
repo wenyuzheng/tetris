@@ -252,4 +252,18 @@ describe("class Board", () => {
             })
         })
     })
+
+    describe("isPieceAtBottom", () => {
+        it("true", () => {
+            const currPiece1 = new Piece([new Cell(3, 1), new Cell(3, 2)]);
+            const myBoard = new Board(currPiece1, [], 10, 15);
+            expect(myBoard.isPieceAtBottom()).toEqual(true);
+        })
+
+        it("false", () => {
+            const currPiece1 = new Piece([new Cell(3, 3), new Cell(2, 3)]);
+            const myBoard = new Board(currPiece1, [], 10, 15);
+            expect(myBoard.isPieceAtBottom()).toEqual(false);
+        })
+    })
 })

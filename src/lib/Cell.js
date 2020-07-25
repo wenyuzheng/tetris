@@ -19,13 +19,6 @@ class Cell {
         this.x = newVectorOB.x
         this.y = newVectorOB.y
     }
-
-    hasReachedBottom() {
-        if (this.y = 1) {
-            return true
-        }
-        return false
-    }
 }
 
 export default Cell;

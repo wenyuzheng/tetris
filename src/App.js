@@ -1,57 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Board from './lib/Board';
-import Piece from './lib/Piece';
-import Cell from './lib/Cell';
 import _ from "lodash";
-
-const randomColor = () => {
-  const colors = ["red", "green", "blue", "yellow", "purple"];
-  const randomNumber = Math.floor(Math.random() * 5);
-  return colors[randomNumber];
-}
-
-const generateCells = () => {
-  const initialCell = new Cell(5, 14, true, randomColor());
-  const cell1 = new Cell(_.cloneDeep(initialCell).x -= 1, _.cloneDeep(initialCell).y, false, randomColor());
-  const cell2 = new Cell(_.cloneDeep(initialCell).x += 1, _.cloneDeep(initialCell).y, false, randomColor());
-  const cell3 = new Cell(_.cloneDeep(initialCell).x, _.cloneDeep(initialCell).y -= 1, false, randomColor());
-  
-  const centerCells = [initialCell];
-  const adjCells = [cell1, cell2, cell3];
-
-  const rand = Math.floor(Math.random() * adjCells.length);
-  const newCenterCell = adjCells[rand];
-  centerCells.push(newCenterCell);
-  adjCells.splice(rand, 1);
-
-  for (let i = 0; i < centerCells.length; i++) {
-    if (newCenterCell.x - 1 !== centerCells[i].x) {
-      adjCells.push(new Cell(_.cloneDeep(newCenterCell).x -= 1, _.cloneDeep(newCenterCell).y, false, randomColor()))
-    }
-    if (newCenterCell.x + 1 !== centerCells[i].x) {
-      adjCells.push(new Cell(_.cloneDeep(newCenterCell).x += 1, _.cloneDeep(newCenterCell).y, false, randomColor()))
-    }
-    if (newCenterCell.y - 1 !== centerCells[i].y) {
-      adjCells.push(new Cell(_.cloneDeep(newCenterCell).x, _.cloneDeep(newCenterCell).y -= 1, false, randomColor()))
-    }
-    if (newCenterCell.y + 1 !== centerCells[i].y) {
-      adjCells.push(new Cell(_.cloneDeep(newCenterCell).x, _.cloneDeep(newCenterCell).y += 1, false, randomColor()))
-    }
-  }
-}
+import generatePiece from './lib/generatePiece';
 
 const xMax = 10;
 const yMax = 14;
-const myBoard = new Board(new Piece([new Cell(3, 4, false, "blue"), new Cell(3, 5, true, "blue"), new Cell(4, 5, false, "blue")]),
-  [new Cell(6, 1, false, randomColor()), new Cell(7, 1, false, randomColor()), new Cell(7, 2, false, randomColor())], 
+const myBoard = new Board(generatePiece(xMax, yMax),
+  [], 
   xMax, yMax);
 
-const App = () => {
+const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) => {
+  // console.log("rerender App");
+
   const xIndices = Array.from(Array(xMax), (_, i) => i + 1);
   const yIndices = Array.from(Array(yMax), (_, i) => i + 1).reverse();
 
   const [board, setBoard] = useState(_.cloneDeep(myBoard));
+  const [endOfGame, setEndOfGame] = useState(false);
+
+  const moveDownHandler = () => {
+    myBoard.moveCurrPiece("down");
+    setBoard(_.cloneDeep(myBoard));
+  }
+
+  // useEffect(() => {
+  //   for (let i = 0; i < myBoard.boardCells.length; i++) {
+  //     if (myBoard.boardCells[i].y >= yMax) {
+  //       setEndOfGame(true);
+  //     }
+  //   }
+  //   if (!endOfGame && myBoard.isPieceAtBottom()) {
+  //     myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
+  //     myBoard.currPiece = generatePiece(xMax, yMax);
+  //     setBoard(_.cloneDeep(myBoard));
+  //   } 
+  // }, [board])
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     moveDownHandler()
+  //   }, 1000)
+  // }, [moveDownHandler])
+
+  useEffect(() => {
+    console.log("check 1", timerStarted, doFinalCheck)
+    if (!timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
+      setTimerStarted(true);
+    }
+  }, [board, timerStarted, setTimerStarted, doFinalCheck])
+
+  useEffect(() => {
+    if(doFinalCheck) {
+      if (myBoard.isPieceAtBottom()) {
+        myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
+        myBoard.currPiece = generatePiece(xMax, yMax);
+        setDoFinalCheck(false);
+        setTimeout(() => {
+          setBoard(_.cloneDeep(myBoard));
+        }, 100)
+        
+        
+      }
+    }
+  }, [doFinalCheck])
 
   return <>
     <div className="App">
@@ -72,8 +84,7 @@ const App = () => {
       })}
     </div>
     <button onClick={() => {
-      myBoard.moveCurrPiece("down");
-      setBoard(_.cloneDeep(myBoard));
+      moveDownHandler();
     }}>moveDown</button>
     <button onClick={() => {
       myBoard.moveCurrPiece("left");
