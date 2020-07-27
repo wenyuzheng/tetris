@@ -6,12 +6,9 @@ import generatePiece from './lib/generatePiece';
 
 const xMax = 10;
 const yMax = 14;
-const myBoard = new Board(generatePiece(xMax, yMax),
-  [], 
-  xMax, yMax);
+const myBoard = new Board(generatePiece(xMax, yMax),[], xMax, yMax);
 
 const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) => {
-  // console.log("rerender App");
 
   const xIndices = Array.from(Array(xMax), (_, i) => i + 1);
   const yIndices = Array.from(Array(yMax), (_, i) => i + 1).reverse();
@@ -25,42 +22,30 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
   }
 
   // useEffect(() => {
-  //   for (let i = 0; i < myBoard.boardCells.length; i++) {
-  //     if (myBoard.boardCells[i].y >= yMax) {
-  //       setEndOfGame(true);
-  //     }
-  //   }
-  //   if (!endOfGame && myBoard.isPieceAtBottom()) {
-  //     myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
-  //     myBoard.currPiece = generatePiece(xMax, yMax);
-  //     setBoard(_.cloneDeep(myBoard));
-  //   } 
-  // }, [board])
-
-  // useEffect(() => {
   //   setTimeout(() => {
   //     moveDownHandler()
   //   }, 1000)
   // }, [moveDownHandler])
 
   useEffect(() => {
-    console.log("check 1", timerStarted, doFinalCheck)
-    if (!timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
+    if (!endOfGame && !timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
       setTimerStarted(true);
     }
-  }, [board, timerStarted, setTimerStarted, doFinalCheck])
+    setDoFinalCheck(false);
+  }, [board, setTimerStarted, doFinalCheck])
 
   useEffect(() => {
+    for (let i = 0; i < myBoard.boardCells.length; i++) {
+      if (myBoard.boardCells[i].y >= yMax) {
+        setEndOfGame(true);
+      }
+    }
     if(doFinalCheck) {
-      if (myBoard.isPieceAtBottom()) {
+      if (!endOfGame && myBoard.isPieceAtBottom()) {
         myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
         myBoard.currPiece = generatePiece(xMax, yMax);
+        setBoard(_.cloneDeep(myBoard));
         setDoFinalCheck(false);
-        setTimeout(() => {
-          setBoard(_.cloneDeep(myBoard));
-        }, 100)
-        
-        
       }
     }
   }, [doFinalCheck])

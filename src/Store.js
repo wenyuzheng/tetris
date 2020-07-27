@@ -7,7 +7,7 @@ const Store = () => {
     const [doFinalCheck, setDoFinalCheck] = useState(false);
     useEffect(()=> {
         if (timerStarted) {
-            console.log("time put started");
+            console.log("time out started");
             setTimeout(() => {
                 console.log("time out ended");
                 setTimerStarted(false);

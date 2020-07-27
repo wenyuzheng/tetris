@@ -29,3 +29,9 @@
 3. isPieceAtBottom: stack on existing piece also count [done]
 4. score when fill in one line
 5. end of game [done]
+
+
+# 2 sec timer:
+1. isPieceAtBottom === true  => start 2 sec timer
+2. after 2 sec => push currPiece.pieceCells as boardCells
+3. if after 2 sec, can moveDown => moveDown 
