@@ -260,10 +260,37 @@ describe("class Board", () => {
             expect(myBoard.isPieceAtBottom()).toEqual(true);
         })
 
+        it("true", () => {
+            const currPiece1 = new Piece([new Cell(3, 3), new Cell(3, 2)]);
+            const myBoard = new Board(currPiece1, [new Cell(3, 1)], 10, 15);
+            expect(myBoard.isPieceAtBottom()).toEqual(true);
+        })
+
         it("false", () => {
             const currPiece1 = new Piece([new Cell(3, 3), new Cell(2, 3)]);
             const myBoard = new Board(currPiece1, [], 10, 15);
             expect(myBoard.isPieceAtBottom()).toEqual(false);
+        })
+    })
+
+    describe("removeRow", () => {
+        it.only("remove one row at the bottom", () => {
+            const currPiece1 = new Piece([new Cell(3, 6)]);
+            const boardCells = [new Cell(1, 1), new Cell(2, 1), new Cell(3, 1), new Cell(1, 2)];
+            const myBoard = new Board(currPiece1, boardCells, 3, 6);
+            myBoard.removeRow(1);
+            expect(myBoard.boardCells).toEqual([new Cell(1, 1)]);
+        })
+    })
+
+    describe("removeFullRows", () => {
+        it.only("remove one row at the bottom", () => {
+            const currPiece1 = new Piece([new Cell(3, 6)]);
+            const boardCells = [new Cell(1, 1), new Cell(2, 1), new Cell(3, 1), new Cell(1, 2), new Cell(2, 2), new Cell(3, 2), new Cell(1, 3)];
+            const myBoard = new Board(currPiece1, boardCells, 3, 6);
+            const result = myBoard.removeFullRows();
+            expect(myBoard.boardCells).toEqual([new Cell(1, 1)]);
+            expect(result).toEqual(2);
         })
     })
 })

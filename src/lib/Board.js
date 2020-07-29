@@ -8,6 +8,34 @@ class Board {
         this.yMax = yMax;
     }
 
+    removeRow(j) {
+        const newCells = [];
+        this.boardCells.forEach(cell => {
+            if (cell.y > j) {
+                cell.y -= 1;
+                newCells.push(cell);
+            } else if (cell.y === j) {
+            } else {
+                newCells.push(cell);
+            }
+        })
+        this.boardCells = newCells;
+    }
+
+    removeFullRows() {
+        let removedRows = 0;
+        const xIndices = Array.from(Array(this.xMax), (_, i) => i + 1);
+
+        for (let y = 1; y <= this.yMax; y++) {
+            if (xIndices.every(x => this.onBoard(x, y))){
+                this.removeRow(y);
+                y -= 1;
+                removedRows += 1;
+            }
+        }
+        return removedRows;
+    }
+
     onBoard(x, y) {
         for (let i = 0; i < this.boardCells.length; i++) {
             if (this.boardCells[i].x === x && this.boardCells[i].y === y) {
