@@ -24,9 +24,9 @@
     * moveRotateRight(center?) //later
 
 # To do: 
-1. auto down
-2. rotate at the top => out of bound [done]
-3. isPieceAtBottom: stack on existing piece also count [done]
-4. score when fill in one line
-5. end of game [done]
-6. database score
+1. score when fill in one line [done]
+2. buttons + hotkeys onPress
+3. database score (setting button)
+4. high score rank
+5. Game over page
+6. paused page

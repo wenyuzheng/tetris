@@ -3,7 +3,7 @@ import './App.css';
 import Board from './lib/Board';
 import _ from "lodash";
 import generatePiece from './lib/generatePiece';
-import MusicPlayer from './lib/MusicPlayer';
+import Buttons from './lib/Buttons';
 
 const xMax = 10;
 const yMax = 14;
@@ -17,15 +17,17 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
   const [board, setBoard] = useState(_.cloneDeep(myBoard));
   const [endOfGame, setEndOfGame] = useState(false);
   const [pauseGame, setPauseGame] = useState(false);
+  const [totalRemovedRows, setTotalRemovedRows] = useState(0);
 
   useEffect(() => {
     if (!pauseGame) {
-      setInterval(() => {
+      const autoDown = setInterval(() => {
         myBoard.moveCurrPiece("down");
         setBoard(_.cloneDeep(myBoard));
       }, 1000)
+      return () => clearInterval(autoDown)
     }
-  }, [])
+  }, [pauseGame])
 
   useEffect(() => {
     if (!endOfGame && !timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
@@ -43,7 +45,7 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
     if(doFinalCheck) {
       if (!endOfGame && myBoard.isPieceAtBottom()) {
         myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
-        myBoard.removeFullRows();
+        setTotalRemovedRows(totalRemovedRows + myBoard.removeFullRows());
         myBoard.currPiece = generatePiece(xMax, yMax);
         setBoard(_.cloneDeep(myBoard));
         setDoFinalCheck(false);
@@ -69,28 +71,8 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
         })
       })}
     </div>
-    <button onClick={() => {
-      myBoard.moveCurrPiece("down");
-      setBoard(_.cloneDeep(myBoard));
-    }}>moveDown</button>
-    <button onClick={() => {
-      myBoard.moveCurrPiece("left");
-      setBoard(_.cloneDeep(myBoard));
-    }}>moveLeft</button>
-    <button onClick={() => {
-      myBoard.moveCurrPiece("right");
-      setBoard(_.cloneDeep(myBoard));
-    }}>moveRight</button>
-    <button onClick={() => {
-      myBoard.rotateCurrPiece("left");
-      setBoard(_.cloneDeep(myBoard));
-    }}>rotateLeft</button>
-    <button onClick={() => {
-      myBoard.rotateCurrPiece("right");
-      setBoard(_.cloneDeep(myBoard));
-    }}>rotateRight</button>
-    <MusicPlayer />
-    <button onClick={() => setPauseGame(!pauseGame)}>{pauseGame ? "Play" : "Pause"}</button>
+    <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
+    <div>Lines: {totalRemovedRows}</div>
   </>
 }
 
