@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Board from './lib/Board';
 import _ from "lodash";
+import Board from './lib/Board';
 import generatePiece from './lib/generatePiece';
 import Buttons from './lib/Buttons';
 import GameOverWindow from './lib/GameOverWindow';
 import StartPage from './lib/StartPage';
+import Grid from './lib/Grid';
 
 const xMax = 10;
 const yMax = 14;
 const myBoard = new Board(generatePiece(xMax, yMax),[], xMax, yMax);
 
 const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
-
-  const xIndices = Array.from(Array(xMax), (_, i) => i + 1);
-  const yIndices = Array.from(Array(yMax), (_, i) => i + 1).reverse();
 
   const [board, setBoard] = useState(_.cloneDeep(myBoard));
   const [endOfGame, setEndOfGame] = useState(false);
@@ -71,30 +69,12 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) =
 
   return <>
     <StartPage setDisplayStartPage={setDisplayStartPage} displayStartPage={displayStartPage} setPauseGame={setPauseGame}/> 
-      <div>
-        <div className="App">
-          {xIndices.map((i) => {
-            return yIndices.map((j) => {
-              let x = i;
-              let y = j;
-              if (board.onBoard(x, y)) {
-                const color = board.getCellAt(x, y).color;
-                return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
-              }
-              if (board.currPiece.onPiece(x, y)) {
-                const color = board.currPiece.getCellAt(x, y).color;
-                return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
-              }
-              return <div key={`${x}-${y}`} style={{backgroundColor: "grey"}}>{x}-{y}</div>
-            })
-          })}
-        </div>
-        <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
-        <div>Lines: {totalRemovedRows}</div>
-        <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
+    <Grid xMax={xMax} yMax={yMax} board={board}/>
+    <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
+    <div>Lines: {totalRemovedRows}</div>
+    <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
 
-        <button onClick={() => { setEndOfGame(!endOfGame); console.log(endOfGame)}}>click</button>
-      </div>
+    <button onClick={() => { setEndOfGame(!endOfGame); console.log(endOfGame)}}>click</button>
   </>
 }
 
