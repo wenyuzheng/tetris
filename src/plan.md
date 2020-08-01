@@ -26,11 +26,11 @@
 # To do: 
 1. score when fill in one line [done]
 2. buttons [done] + hotkeys onPress [later]
-3. database score [done]
+3. database score [done] + problem: replace the old one
 4. high score rank
 5. Game over page [done]
 6. paused page
-7. home page / start page (back after game over)
+7. home page / start page (back after game over) [done] + reset board after start
 8. css
 
 

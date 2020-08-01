@@ -10,7 +10,7 @@ const Buttons = ({myBoard, setBoard, setPauseGame, pauseGame}) => {
             {moveCurrPieceButtons.map((button) => {
                 return (
                     <button key={button}
-                        onClick={() => {
+                        onMouseDown={() => {
                             button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
                             setBoard(_.cloneDeep(myBoard));
                         }}

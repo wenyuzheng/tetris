@@ -1,4 +1,4 @@
-.modal {
+.startpage-modal {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -7,38 +7,26 @@
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(255,255,255,100); 
 }
 
 /* Modal Content/Box */
-.modal-content {
+.startpage-modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 60%; /* Could be more or less, depending on screen size */
-    height: 30%;
+    width: 30%;
+    height: 20%;
     text-align: center;
 }
 
-.username-input[type=text] {
-    padding: 5px;
-    font-size: 16px;
-    border: 2px solid red;
-    border-radius: 4px;
-}
-
-.username-input[type=text]:focus {
-  border: 3px solid black;
-  outline:none
-}
-
-.game-over-buttons {
+.start-button {
     margin: 10px;
     font-size: 18px;
 }
 
-.game-over-buttons:hover {
+.start-button:hover {
     background-color: #6f7d99;
     color: white;
     font-size: 25px;

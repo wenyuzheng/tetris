@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './GameOverWindow.css';
 import firebase from '../firebase';
 
-const GameOverWindow = ({ endOfGame, totalRemovedRows}) => {
+const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage }) => {
     const [display, setDisplay] = useState("none");
     const [userName, setUserName] = useState("");
     
@@ -16,7 +16,14 @@ const GameOverWindow = ({ endOfGame, totalRemovedRows}) => {
         } else {
             firebase.database().ref("/tetris").set(userName);
             firebase.database().ref(`/tetris/${userName}/score`).set(totalRemovedRows);
+            setDisplay("none");
+            setDisplayStartPage(true);
         }
+    }
+
+    const cancelHandler = () => {
+        setDisplay("none");
+        setDisplayStartPage(true);
     }
 
     const style = {margin: "20px"};
@@ -31,7 +38,7 @@ const GameOverWindow = ({ endOfGame, totalRemovedRows}) => {
                     placeholder="Your username" className="username-input"/>
                 <div>
                     <button onClick={saveHandler} className="game-over-buttons">Save</button>
-                    <button onClick={() => setDisplay("none")} className="game-over-buttons">Cancel</button>
+                    <button onClick={cancelHandler} className="game-over-buttons">Cancel</button>
                 </div>
             </div>
         </div>

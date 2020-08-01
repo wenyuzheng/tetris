@@ -4,22 +4,23 @@ import Board from './lib/Board';
 import _ from "lodash";
 import generatePiece from './lib/generatePiece';
 import Buttons from './lib/Buttons';
-import firebase from './firebase';
 import GameOverWindow from './lib/GameOverWindow';
+import StartPage from './lib/StartPage';
 
 const xMax = 10;
 const yMax = 14;
 const myBoard = new Board(generatePiece(xMax, yMax),[], xMax, yMax);
 
-const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) => {
+const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
 
   const xIndices = Array.from(Array(xMax), (_, i) => i + 1);
   const yIndices = Array.from(Array(yMax), (_, i) => i + 1).reverse();
 
   const [board, setBoard] = useState(_.cloneDeep(myBoard));
   const [endOfGame, setEndOfGame] = useState(false);
-  const [pauseGame, setPauseGame] = useState(false);
+  const [pauseGame, setPauseGame] = useState(true);
   const [totalRemovedRows, setTotalRemovedRows] = useState(0);
+  const [displayStartPage, setDisplayStartPage] = useState(true);
 
   // useEffect(() => {
   //   firebase.database().ref(`/tetris/${userName}/score`).once('value').then(data => {
@@ -69,27 +70,31 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
   }, [doFinalCheck])
 
   return <>
-    <div className="App">
-      {xIndices.map((i) => {
-        return yIndices.map((j) => {
-          let x = i;
-          let y = j;
-          if (board.onBoard(x, y)) {
-            const color = board.getCellAt(x, y).color;
-            return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
-          }
-          if (board.currPiece.onPiece(x, y)) {
-            const color = board.currPiece.getCellAt(x, y).color;
-            return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
-          }
-          return <div key={`${x}-${y}`} style={{backgroundColor: "grey"}}>{x}-{y}</div>
-        })
-      })}
-    </div>
-    <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
-    <div>Lines: {totalRemovedRows}</div>
-    <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows}/>
-    <button onClick={() => { setEndOfGame(!endOfGame); console.log(endOfGame)}}>click</button>
+    <StartPage setDisplayStartPage={setDisplayStartPage} displayStartPage={displayStartPage} setPauseGame={setPauseGame}/> 
+      <div>
+        <div className="App">
+          {xIndices.map((i) => {
+            return yIndices.map((j) => {
+              let x = i;
+              let y = j;
+              if (board.onBoard(x, y)) {
+                const color = board.getCellAt(x, y).color;
+                return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
+              }
+              if (board.currPiece.onPiece(x, y)) {
+                const color = board.currPiece.getCellAt(x, y).color;
+                return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
+              }
+              return <div key={`${x}-${y}`} style={{backgroundColor: "grey"}}>{x}-{y}</div>
+            })
+          })}
+        </div>
+        <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
+        <div>Lines: {totalRemovedRows}</div>
+        <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
+
+        <button onClick={() => { setEndOfGame(!endOfGame); console.log(endOfGame)}}>click</button>
+      </div>
   </>
 }
 
