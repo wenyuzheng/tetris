@@ -4,6 +4,8 @@ import Board from './lib/Board';
 import _ from "lodash";
 import generatePiece from './lib/generatePiece';
 import Buttons from './lib/Buttons';
+import firebase from './firebase';
+import GameOverWindow from './lib/GameOverWindow';
 
 const xMax = 10;
 const yMax = 14;
@@ -19,6 +21,16 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
   const [pauseGame, setPauseGame] = useState(false);
   const [totalRemovedRows, setTotalRemovedRows] = useState(0);
 
+  // useEffect(() => {
+  //   firebase.database().ref(`/tetris/${userName}/score`).once('value').then(data => {
+  //     if (data.val() === null) {
+  //       setTotalRemovedRows(0);
+  //     } else {
+  //       setTotalRemovedRows(data.val().score);
+  //     }
+  //   })
+  // }, [])
+
   useEffect(() => {
     if (!pauseGame) {
       const autoDown = setInterval(() => {
@@ -30,6 +42,14 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
   }, [pauseGame])
 
   useEffect(() => {
+    for (let i = 0; i < myBoard.boardCells.length; i++) {
+      if (myBoard.boardCells[i].y >= yMax) {
+        setEndOfGame(true);
+      }
+    }
+  }, [board])
+
+  useEffect(() => {
     if (!endOfGame && !timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
       setTimerStarted(true);
     }
@@ -37,11 +57,6 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
   }, [board, setTimerStarted, doFinalCheck])
 
   useEffect(() => {
-    for (let i = 0; i < myBoard.boardCells.length; i++) {
-      if (myBoard.boardCells[i].y >= yMax) {
-        setEndOfGame(true);
-      }
-    }
     if(doFinalCheck) {
       if (!endOfGame && myBoard.isPieceAtBottom()) {
         myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
@@ -73,6 +88,8 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted}) =>
     </div>
     <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
     <div>Lines: {totalRemovedRows}</div>
+    <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows}/>
+    <button onClick={() => { setEndOfGame(!endOfGame); console.log(endOfGame)}}>click</button>
   </>
 }
 

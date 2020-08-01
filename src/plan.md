@@ -25,8 +25,13 @@
 
 # To do: 
 1. score when fill in one line [done]
-2. buttons + hotkeys onPress
-3. database score (setting button)
+2. buttons [done] + hotkeys onPress [later]
+3. database score [done]
 4. high score rank
-5. Game over page
+5. Game over page [done]
 6. paused page
+7. home page / start page (back after game over)
+8. css
+
+
+users -> {name: xxx, score: 0}
