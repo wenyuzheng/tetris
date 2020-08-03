@@ -24,14 +24,14 @@
     * moveRotateRight(center?) //later
 
 # To do: 
-1. score when fill in one line [done]
-2. buttons [done] + hotkeys onPress [later]
-3. database score [done] + problem: replace the old one
-4. high score rank
-5. Game over page [done]
-6. paused page
-7. home page / start page (back after game over) [done] + reset board after start
-8. css
+1. show next piece
+2. buttons mouseup + mousedown
+3. high score rank (route)
+4. different speed / level
+5. css: @media queries
+6. sound effect
+
+1. paused page [later]
 
 
 users -> {name: xxx, score: 0}

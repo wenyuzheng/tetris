@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import "./StartPage.css";
 
-const StartPage = ({ setDisplayStartPage, displayStartPage, setPauseGame}) => {
+const StartPage = ({ displayStartPage, startGameHandler }) => {
 
     const [display, setDisplay] = useState("");
 
     useEffect(() => {
         setDisplay(displayStartPage ? "" : "none")
     }, [displayStartPage])
-
-    const startGameHandler = () => {
-        // window.location.reload(false);
-        setDisplayStartPage(false);
-        setPauseGame(false);
-    }
 
     return (
         <div className="startpage-modal" style={{display: display}}>

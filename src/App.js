@@ -67,14 +67,20 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) =
     }
   }, [doFinalCheck])
 
+  const startGameHandler = () => {
+    myBoard.boardCells = [];
+    setBoard(_.cloneDeep(myBoard));
+    setEndOfGame(false);
+    setDisplayStartPage(false);
+    setPauseGame(false);
+  }
+
   return <>
-    <StartPage setDisplayStartPage={setDisplayStartPage} displayStartPage={displayStartPage} setPauseGame={setPauseGame}/> 
+    <StartPage startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
     <Grid xMax={xMax} yMax={yMax} board={board}/>
     <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
     <div>Lines: {totalRemovedRows}</div>
     <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
-
-    <button onClick={() => { setEndOfGame(!endOfGame); console.log(endOfGame)}}>click</button>
   </>
 }
 

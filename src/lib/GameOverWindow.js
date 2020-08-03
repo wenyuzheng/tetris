@@ -14,10 +14,12 @@ const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage }) =>
         if (userName === "" || userName === null) {
             alert("Please enter your username!")
         } else {
-            firebase.database().ref("/tetris").set(userName);
-            firebase.database().ref(`/tetris/${userName}/score`).set(totalRemovedRows);
+            let currTime = new Date();
+            let timeId = currTime.getTime();
+            firebase.database().ref(`/tetris/${userName}/${timeId}/score`).set(totalRemovedRows);
             setDisplay("none");
             setDisplayStartPage(true);
+            setUserName("");
         }
     }
 
