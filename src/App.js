@@ -7,35 +7,37 @@ import Buttons from './lib/Buttons';
 import GameOverWindow from './lib/GameOverWindow';
 import StartPage from './lib/StartPage';
 import Grid from './lib/Grid';
+import LeaderBoard from './lib/LeaderBoard';
 
 const xMax = 10;
 const yMax = 14;
-const myBoard = new Board(generatePiece(xMax, yMax),[], xMax, yMax);
+const myBoard = new Board(null, [], generatePiece(xMax, yMax), xMax, yMax);
 
-const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
+const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
 
   const [board, setBoard] = useState(_.cloneDeep(myBoard));
   const [endOfGame, setEndOfGame] = useState(false);
   const [pauseGame, setPauseGame] = useState(true);
   const [totalRemovedRows, setTotalRemovedRows] = useState(0);
   const [displayStartPage, setDisplayStartPage] = useState(true);
+  const [dropSpeed, setDropSpeed] = useState(1000);
 
-  // useEffect(() => {
-  //   firebase.database().ref(`/tetris/${userName}/score`).once('value').then(data => {
-  //     if (data.val() === null) {
-  //       setTotalRemovedRows(0);
-  //     } else {
-  //       setTotalRemovedRows(data.val().score);
-  //     }
-  //   })
-  // }, [])
+  const currToNextPieceHandler = () => {
+    myBoard.currPiece = myBoard.nextPiece;
+    myBoard.nextPiece = generatePiece(xMax, yMax);
+    setBoard(_.cloneDeep(myBoard));
+  }
+
+  useEffect(() => {
+    currToNextPieceHandler();
+  }, [])
 
   useEffect(() => {
     if (!pauseGame) {
       const autoDown = setInterval(() => {
         myBoard.moveCurrPiece("down");
         setBoard(_.cloneDeep(myBoard));
-      }, 1000)
+      }, dropSpeed)
       return () => clearInterval(autoDown)
     }
   }, [pauseGame])
@@ -44,6 +46,7 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) =
     for (let i = 0; i < myBoard.boardCells.length; i++) {
       if (myBoard.boardCells[i].y >= yMax) {
         setEndOfGame(true);
+        setPauseGame(true);
       }
     }
   }, [board])
@@ -60,28 +63,45 @@ const App = ({ doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) =
       if (!endOfGame && myBoard.isPieceAtBottom()) {
         myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
         setTotalRemovedRows(totalRemovedRows + myBoard.removeFullRows());
-        myBoard.currPiece = generatePiece(xMax, yMax);
-        setBoard(_.cloneDeep(myBoard));
+        currToNextPieceHandler();
         setDoFinalCheck(false);
       }
     }
   }, [doFinalCheck])
 
+  useEffect(() => {
+    if (totalRemovedRows >= 5) {
+      setDelay(1500);
+      setDropSpeed(500);
+    } else if (totalRemovedRows >= 10) {
+      setDelay(800);
+      setDropSpeed(300);
+    } else {
+      setDelay(2000);
+      setDropSpeed(1000);
+    }
+  }, [totalRemovedRows])
+
   const startGameHandler = () => {
     myBoard.boardCells = [];
     setBoard(_.cloneDeep(myBoard));
     setEndOfGame(false);
-    setDisplayStartPage(false);
+    setDisplayStartPage(false); 
     setPauseGame(false);
   }
 
-  return <>
-    <StartPage startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
-    <Grid xMax={xMax} yMax={yMax} board={board}/>
-    <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
-    <div>Lines: {totalRemovedRows}</div>
-    <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
-  </>
+  if(myBoard.currPiece) {
+    return <>
+      <StartPage startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
+      <Grid xMax={xMax} yMax={yMax} board={board}/>
+      <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
+      <div>Lines: {totalRemovedRows}</div>
+      <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
+      <LeaderBoard />
+    </>
+  } else {
+    return <>Loading...</>
+  }
 }
 
 export default App;

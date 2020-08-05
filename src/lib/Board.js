@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
 class Board {
-    constructor(currPiece, boardCells, xMax, yMax) {
+    constructor(currPiece, boardCells, nextPiece, xMax, yMax) {
         this.currPiece = currPiece;
         this.boardCells = boardCells;
+        this.nextPiece = nextPiece;
         this.xMax =xMax;
         this.yMax = yMax;
     }

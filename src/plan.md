@@ -30,8 +30,6 @@
 4. different speed / level
 5. css: @media queries
 6. sound effect
+7. cannot move when pause
 
 1. paused page [later]
-
-
-users -> {name: xxx, score: 0}

@@ -6,7 +6,7 @@ const Grid = ({xMax, yMax, board}) => {
     const xIndices = Array.from(Array(xMax), (_, i) => i + 1);
     const yIndices = Array.from(Array(yMax), (_, i) => i + 1).reverse();
 
-    return (
+    return <>
         <div className="Grid">
             {xIndices.map((i) => {
                 return yIndices.map((j) => {
@@ -14,17 +14,17 @@ const Grid = ({xMax, yMax, board}) => {
                     let y = j;
                     if (board.onBoard(x, y)) {
                         const color = board.getCellAt(x, y).color;
-                        return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
+                        return <div key={`${x}-${y}`} style={{ backgroundColor: color }}></div>
                     }
                     if (board.currPiece.onPiece(x, y)) {
                         const color = board.currPiece.getCellAt(x, y).color;
-                        return <div key={`${x}-${y}`} style={{ backgroundColor: color }}>{x}-{y}</div>
+                        return <div key={`${x}-${y}`} style={{ backgroundColor: color }}></div>
                     }
-                    return <div key={`${x}-${y}`} style={{ backgroundColor: "grey" }}>{x}-{y}</div>
+                    return <div key={`${x}-${y}`} style={{ backgroundColor: "grey" }}></div>
                 })
             })}
         </div>
-    )
+    </>
 }
 
 export default Grid;

@@ -4,15 +4,17 @@ import App from './App';
 const Store = () => {
     const [timerStarted, setTimerStarted] = useState(false);
     const [doFinalCheck, setDoFinalCheck] = useState(false);
+    const [delay, setDelay] = useState(2000);
+
     useEffect(()=> {
         if (timerStarted) {
             setTimeout(() => {
                 setTimerStarted(false);
                 setDoFinalCheck(true);
-            }, 2000)
+            }, delay)
         }
     }, [timerStarted])
-    return <App doFinalCheck={doFinalCheck} setDoFinalCheck={setDoFinalCheck} timerStarted={timerStarted} setTimerStarted={setTimerStarted}/>
+    return <App setDelay={setDelay} doFinalCheck={doFinalCheck} setDoFinalCheck={setDoFinalCheck} timerStarted={timerStarted} setTimerStarted={setTimerStarted}/>
 }
 
 export default Store;
