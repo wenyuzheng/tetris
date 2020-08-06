@@ -26,10 +26,9 @@
 # To do: 
 1. show next piece
 2. buttons mouseup + mousedown
-3. high score rank (route)
-4. different speed / level
-5. css: @media queries
-6. sound effect
-7. cannot move when pause
+3. different speed / level
+4. css: @media queries
+5. sound effect
+6. cannot move when pause
 
 1. paused page [later]

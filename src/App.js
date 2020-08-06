@@ -7,7 +7,6 @@ import Buttons from './lib/Buttons';
 import GameOverWindow from './lib/GameOverWindow';
 import StartPage from './lib/StartPage';
 import Grid from './lib/Grid';
-import LeaderBoard from './lib/LeaderBoard';
 
 const xMax = 10;
 const yMax = 14;
@@ -97,7 +96,6 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
       <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
       <div>Lines: {totalRemovedRows}</div>
       <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
-      <LeaderBoard />
     </>
   } else {
     return <>Loading...</>
