@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import _ from "lodash";
-import Board from './lib/Board';
+import Board from './lib/Board/Board';
 import generatePiece from './lib/generatePiece';
-import Buttons from './lib/Buttons';
-import GameOverWindow from './lib/GameOverWindow';
-import StartPage from './lib/StartPage';
-import Grid from './lib/Grid';
-import NextPieceGrid from './lib/NextPieceGrid';
+import Buttons from './lib/Components/Buttons';
+import GameOverWindow from './lib/Containers/GameOverWindow';
+import StartPage from './lib/Containers/StartPage';
+import Grid from './lib/Containers/Grid';
+import NextPieceGrid from './lib/Components/NextPieceGrid';
 
 const xMax = 10;
-const yMax = 14;
+const yMax = 20;
 const myBoard = new Board(null, [], generatePiece(xMax, yMax), xMax, yMax);
+
+const levels = {
+  1: {
+    delay: 2000,
+    dropSpeed: 1000,
+  },
+  2: {
+    delay: 1500,
+    dropSpeed: 500,
+  },
+  3: {
+    delay: 800,
+    dropSpeed: 300,
+  },
+}
 
 const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
 
@@ -21,6 +36,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   const [totalRemovedRows, setTotalRemovedRows] = useState(0);
   const [displayStartPage, setDisplayStartPage] = useState(true);
   const [dropSpeed, setDropSpeed] = useState(1000);
+  const [level, setLevel] = useState(1);
 
   const currToNextPieceHandler = () => {
     myBoard.currPiece = myBoard.nextPiece;
@@ -70,15 +86,17 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   }, [doFinalCheck])
 
   useEffect(() => {
+    setDelay(levels[level].delay)
+    setDropSpeed(levels[level].dropSpeed)
+  }, [setLevel, level])
+
+  useEffect(() => {
     if (totalRemovedRows >= 5) {
-      setDelay(1500);
-      setDropSpeed(500);
+      setLevel(2);
     } else if (totalRemovedRows >= 10) {
-      setDelay(800);
-      setDropSpeed(300);
+      setLevel(3);
     } else {
-      setDelay(2000);
-      setDropSpeed(1000);
+      setLevel(1);
     }
   }, [totalRemovedRows])
 
@@ -92,11 +110,11 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
 
   if(myBoard.currPiece) {
     return <>
-      <StartPage startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
-      <Grid xMax={xMax} yMax={yMax} board={board}/>
-      <NextPieceGrid board={board}/>
-      <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame}/>
+      <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
+      <Grid xMax={xMax} yMax={yMax} board={board} />
+      <NextPieceGrid board={board} />
       <div>Lines: {totalRemovedRows}</div>
+      <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
       <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
     </>
   } else {

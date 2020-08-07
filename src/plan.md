@@ -24,11 +24,10 @@
     * moveRotateRight(center?) //later
 
 # To do: 
-1. show next piece [done]
-2. buttons mouseup + mousedown
-3. different speed / level
-4. css: @media queries
-5. sound effect
-6. cannot move when pause
+1. buttons mouseup + mousedown
+2. different speed / level [done]
+3. css: @media queries
+4. sound effect
+5. cannot move when pause
 
 1. paused page [later]

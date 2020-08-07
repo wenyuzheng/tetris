@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './GameOverWindow.css';
-import firebase from '../firebase';
-import LeaderBoard from './LeaderBoard';
+import './css/GameOverWindow.css';
+import firebase from '../../firebase';
+import LeaderBoard from '../Components/LeaderBoard';
 
 const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage }) => {
     const [display, setDisplay] = useState("none");

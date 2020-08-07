@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import "./StartPage.css";
+import "./css/StartPage.css";
+import SelectLevel from '../Components/SelectLevel';
 
-const StartPage = ({ displayStartPage, startGameHandler }) => {
+const StartPage = ({ level, displayStartPage, startGameHandler, setLevel }) => {
 
     const [display, setDisplay] = useState("");
 
@@ -13,6 +14,7 @@ const StartPage = ({ displayStartPage, startGameHandler }) => {
         <div className="startpage-modal" style={{display: display}}>
             <div className="startpage-modal-content">
                 <h1>Tetris</h1>
+                <SelectLevel setLevel={setLevel} level={level}/>
                 <button className="start-button" onClick={startGameHandler}>Start Game</button></div>
         </div>
     );

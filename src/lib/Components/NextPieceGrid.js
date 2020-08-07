@@ -1,5 +1,5 @@
 import React from 'react';
-import './NextPieceGrid.css';
+import './css/NextPieceGrid.css';
 import _ from 'lodash';
 
 const NextPieceGrid = ({ board }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Grid.css';
+import './css/Grid.css';
 
 const Grid = ({xMax, yMax, board}) => {
 
