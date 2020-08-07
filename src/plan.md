@@ -24,7 +24,7 @@
     * moveRotateRight(center?) //later
 
 # To do: 
-1. show next piece
+1. show next piece [done]
 2. buttons mouseup + mousedown
 3. different speed / level
 4. css: @media queries

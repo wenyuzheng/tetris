@@ -12,6 +12,16 @@ class Piece {
         }
     }
 
+    minX() {
+        const allX = this.pieceCells.map(cell => cell.x)
+        return Math.min(...allX);
+    }
+
+    minY() {
+        const allY = this.pieceCells.map(cell => cell.y)
+        return Math.min(...allY);
+    }
+
     onPiece(x, y) {
         for (let i = 0; i < this.pieceCells.length; i++) {
             if (this.pieceCells[i].x === x && this.pieceCells[i].y === y) {
