@@ -91,12 +91,12 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   }, [setLevel, level])
 
   useEffect(() => {
-    if (totalRemovedRows >= 5) {
+    if (level <= 1 && totalRemovedRows > 5) {
+      setLevel(1);
+    } else if (level <= 2 && totalRemovedRows >= 5 && totalRemovedRows < 10) {
       setLevel(2);
     } else if (totalRemovedRows >= 10) {
       setLevel(3);
-    } else {
-      setLevel(1);
     }
   }, [totalRemovedRows])
 
@@ -111,10 +111,14 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   if(myBoard.currPiece) {
     return <>
       <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
-      <Grid xMax={xMax} yMax={yMax} board={board} />
-      <NextPieceGrid board={board} />
-      <div>Lines: {totalRemovedRows}</div>
-      <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
+      <div className="App">
+        <Grid xMax={xMax} yMax={yMax} board={board} />
+        <div className="ControlBox">
+          <NextPieceGrid board={board} />
+          <div>Lines: {totalRemovedRows}</div>
+          <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
+        </div>
+      </div>
       <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
     </>
   } else {

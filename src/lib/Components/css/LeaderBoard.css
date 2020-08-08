@@ -3,25 +3,25 @@
   font-family: arial, sans-serif;
 }
 
-.students {
+.score {
   text-align: center;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   border: 3px solid #ddd;
-  width: 100%;
+  width: 80%;
   margin: auto;
 }
 
-.students td, #students th {
+.score td, #score th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-.students tr:nth-child(even){background-color: #f2f2f2;}
+.score tr:nth-child(even){background-color: #f2f2f2;}
 
-.students tr:hover {background-color: #ddd;}
+.score tr:hover {background-color: #ddd;}
 
-.students th {
+.score th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;

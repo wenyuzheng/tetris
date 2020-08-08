@@ -25,9 +25,8 @@
 
 # To do: 
 1. buttons mouseup + mousedown
-2. different speed / level [done]
-3. css: @media queries
-4. sound effect
-5. cannot move when pause
+2. css: @media queries
+3. sound effect
+4. cannot move when pause
 
 1. paused page [later]

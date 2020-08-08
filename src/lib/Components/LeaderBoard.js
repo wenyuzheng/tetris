@@ -18,7 +18,7 @@ const LeaderBoard = () => {
 
     return(
         <div onClick={() => console.log(Object.keys(rank))}>
-            <table className='students'>
+            <table className='score'>
                 <tbody>
                     <tr>
                         <th>USERNAME</th>

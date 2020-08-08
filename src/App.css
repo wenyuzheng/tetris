@@ -1,0 +1,9 @@
+.App {
+    display: inline-flex;
+    margin-left: 20%;
+}
+
+.ControlBox {
+    text-align: center;
+    margin: 20% 20px;
+}

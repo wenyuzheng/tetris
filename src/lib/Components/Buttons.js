@@ -4,6 +4,10 @@ import MusicPlayer from './MusicPlayer';
 
 const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
 
+    const style = {
+        margin: "20px",
+    }
+
     const moveCurrPieceButtons = ["down", "left", "right", "rotate"];
 
     const [isMouseDown, setIsMouseDown] = useState(false);
@@ -11,7 +15,7 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
     let move = null;
 
     return (
-        <div>
+        <div style={style}>
             {moveCurrPieceButtons.map((button) => {
 
                 const mouseDownHandler = () => {
