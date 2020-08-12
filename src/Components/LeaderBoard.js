@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import firebase from '../../firebase';
+import firebase from '../firebase';
 import './css/LeaderBoard.css';
+import { Link } from 'react-router-dom';
 
 const LeaderBoard = () => {
 
     const [rank, setRank] = useState([]);
 
     useEffect(() => {
-        firebase.database().ref("/scores").orderByChild("score").limitToFirst(5).on("value", snap => {
+        firebase.database().ref("/scores").orderByChild("score").limitToLast(5).once("value", snap => {
             let newRank = []; 
             snap.forEach((childSnap) => {
                 newRank.push(childSnap.val())
@@ -16,8 +17,11 @@ const LeaderBoard = () => {
         });
     }, []);
 
-    return(
-        <div onClick={() => console.log(Object.keys(rank))}>
+    return <>
+        <Link to="/">
+            <button className="home-button">Home</button>
+        </Link>
+        <div>
             <table className='score'>
                 <tbody>
                     <tr>
@@ -37,7 +41,7 @@ const LeaderBoard = () => {
                 </tbody>
             </table>
         </div>
-    )
+    </>
 }
 
 export default LeaderBoard;

@@ -3,9 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Store from './Store';
+import {
+  BrowserRouter,
+  Switch,
+  Route
+} from "react-router-dom";
+import LeaderBoard from './Components/LeaderBoard';
 
 ReactDOM.render(
-  <Store />,
+  <BrowserRouter>
+    <Switch>
+      <Route path="/leaderboard" component={LeaderBoard}/>
+      <Route defalut path="/" component={Store} />
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

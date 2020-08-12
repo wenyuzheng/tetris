@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './css/GameOverWindow.css';
-import firebase from '../../firebase';
-import LeaderBoard from '../Components/LeaderBoard';
+import firebase from '../firebase';
 
 const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage }) => {
     const [display, setDisplay] = useState("none");
@@ -36,7 +35,6 @@ const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage }) =>
         <div className="modal" style={{ display: display}}>
             <div className="modal-content">
                 <h1>GAME OVER</h1>
-                <LeaderBoard/>
                 <h3 style={style}>Your Score is: {totalRemovedRows}</h3>
                 <div style={style}>Type in your username to save your score</div>
                 <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} 

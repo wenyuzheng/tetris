@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import MusicPlayer from './MusicPlayer';
+import './css/Buttons.css';
 
 const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
-
-    const style = {
-        margin: "20px",
-    }
 
     const moveCurrPieceButtons = ["down", "left", "right", "rotate"];
 
@@ -15,32 +12,35 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
     let move = null;
 
     return (
-        <div style={style}>
-            {moveCurrPieceButtons.map((button) => {
-
-                const mouseDownHandler = () => {
-                    setIsMouseDown(true);
-                    button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
-                    setBoard(_.cloneDeep(myBoard));
-                }
-
-                return (
-                    <button key={button}
-                        onMouseDown={() => {
-                            move = setTimeout(mouseDownHandler, 500)
-                        }}
-                        onMouseUp={() => {
-                            clearTimeout(move);
-                            if (!isMouseDown) {
-                                mouseDownHandler();
-                            }
-                            setIsMouseDown(false);
-                        }}
-                    >{button}</button>
-                )
-            })}
+        <div>
             <MusicPlayer />
-            <button onClick={() => setPauseGame(!pauseGame)}>{pauseGame ? "Play" : "Pause"}</button>
+            <button className="buttons" onClick={() => setPauseGame(!pauseGame)}>{pauseGame ? "Play" : "Pause"}</button>
+
+            <div>
+                {moveCurrPieceButtons.map((button) => {
+                    const mouseDownHandler = () => {
+                        setIsMouseDown(true);
+                        button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
+                        setBoard(_.cloneDeep(myBoard));
+                    }
+
+                    return (
+                        <button key={button}
+                            className="buttons"
+                            onMouseDown={() => {
+                                move = setTimeout(mouseDownHandler, 500)
+                            }}
+                            onMouseUp={() => {
+                                clearTimeout(move);
+                                if (!isMouseDown) {
+                                    mouseDownHandler();
+                                }
+                                setIsMouseDown(false);
+                            }}
+                        >{button}</button>
+                    )
+                })}
+            </div>
         </div>
     )
 }

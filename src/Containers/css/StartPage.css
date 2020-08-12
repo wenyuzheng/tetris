@@ -13,11 +13,11 @@
 /* Modal Content/Box */
 .startpage-modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 50% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 20%;
-    height: 25%;
+    width: 50%;
+    height: fit-content;
     text-align: center;
 }
 
@@ -30,4 +30,16 @@
     background-color: #6f7d99;
     color: white;
     font-size: 25px;
+}
+
+.leaderboard-button {
+    margin: 10px;
+    font-size: 20px;
+    background-color: grey;
+    color: white;
+}
+
+.leaderboard-button:hover {
+    background-color: #4846aa;
+    border-radius: 15%;
 }

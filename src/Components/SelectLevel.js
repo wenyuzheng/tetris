@@ -7,7 +7,6 @@ export default ( { setLevel, level} ) => {
         padding: 10,
         fontSize: 18,
         border: "1px solid black",
-        width: "60%",
         margin: "10px auto",
     }
 

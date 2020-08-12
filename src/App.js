@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import _ from "lodash";
-import Board from './lib/Board/Board';
-import generatePiece from './lib/generatePiece';
-import Buttons from './lib/Components/Buttons';
-import GameOverWindow from './lib/Containers/GameOverWindow';
-import StartPage from './lib/Containers/StartPage';
-import Grid from './lib/Containers/Grid';
-import NextPieceGrid from './lib/Components/NextPieceGrid';
+import Board from './lib/lib/Board';
+import generatePiece from './lib/lib/generatePiece';
+import Buttons from './Components/Buttons';
+import GameOverWindow from './Containers/GameOverWindow';
+import StartPage from './Containers/StartPage';
+import Grid from './Containers/Grid';
+import NextPieceGrid from './Components/NextPieceGrid';
 
 const xMax = 10;
 const yMax = 20;
@@ -63,6 +63,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
       if (myBoard.boardCells[i].y >= yMax) {
         setEndOfGame(true);
         setPauseGame(true);
+        setLevel(1);
       }
     }
   }, [board])
@@ -113,11 +114,13 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
       <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
       <div className="App">
         <Grid xMax={xMax} yMax={yMax} board={board} />
-        <div className="ControlBox">
-          <NextPieceGrid board={board} />
+        <div>
+          Next: <NextPieceGrid board={board} />
           <div>Lines: {totalRemovedRows}</div>
-          <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
         </div>
+      </div>
+      <div>
+        <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
       </div>
       <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
     </>

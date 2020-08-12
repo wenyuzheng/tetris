@@ -1,5 +1,5 @@
-import Cell from "./Board/Cell";
-import Piece from "./Board/Piece";
+import Cell from "./Cell";
+import Piece from "./Piece";
 import _ from 'lodash';
 
 const generatePiece = (xMax, yMax) => {
