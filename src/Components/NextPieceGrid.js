@@ -17,7 +17,7 @@ const NextPieceGrid = ({ board }) => {
                         const color = board.nextPiece.getCellAt(x, y).color;
                         return <div key={`${x}-${y}`} style={{ backgroundColor: color }}></div>
                     }
-                    return <div key={`${x}-${y}`} style={{ backgroundColor: "grey" }}></div>
+                    return <div key={`${x}-${y}`} style={{ backgroundColor: "#a4a4a4" }}></div>
                 })
             })}
         </div>

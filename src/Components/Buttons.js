@@ -6,7 +6,7 @@ import useLongPress from '../hooks/useLongPress';
 
 const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
 
-    const moveCurrPieceButtons = ["down", "left", "right", "rotate"];
+    const moveCurrPieceButtons = ["rotate", "left", "right", "down"];
 
     // const handler = () => {
     //     button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
@@ -16,29 +16,31 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
 
     const [onMouseDownHandler, onMouseUpHandler] = useLongPress(handler, 500, 50);
 
-    return (
-        <div>
-            <MusicPlayer />
-            <button className="buttons" onClick={() => setPauseGame(!pauseGame)}>{pauseGame ? "Play" : "Pause"}</button>
+    return <div className="buttonsBox">
+            <div className="optionBox">
+                <MusicPlayer />
+                <button className="soundButton">Sound</button>
+            </div>
+            <div className="controlBox">
+                <div className="moveButtonBox">
+                    {moveCurrPieceButtons.map((button) => {
+                        const handler = () => {
+                            button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
+                            setBoard(_.cloneDeep(myBoard));
+                        }
 
-            <div>
-                {moveCurrPieceButtons.map((button) => {
-                    const handler = () => {
-                        button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
-                        setBoard(_.cloneDeep(myBoard));
-                    }
-
-                    return (
-                        <button key={button}
-                            className="buttons"
-                            onMouseDown={onMouseDownHandler}
-                            onMouseUp={onMouseUpHandler}
-                        >{button}</button>
-                    )
-                })}
+                        return <>
+                            <button key={button}
+                                className="buttons"
+                                onMouseDown={onMouseDownHandler}
+                                onMouseUp={onMouseUpHandler}
+                            >{button}</button>
+                        </>
+                    })}
+                </div>
+                <button className="pauseButton" onClick={() => setPauseGame(!pauseGame)}>{pauseGame ? "Play" : "Pause"}</button>
             </div>
         </div>
-    )
 }
 
 export default Buttons;

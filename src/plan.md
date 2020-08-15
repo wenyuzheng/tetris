@@ -27,6 +27,6 @@
 1. buttons mouseup + mousedown
 2. css: @media queries
 3. sound effect
-4. cannot move when pause
+4. cannot move when pause (maybe: stop music when pause?)
 
 1. paused page [later]

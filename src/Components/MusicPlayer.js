@@ -4,9 +4,9 @@ import musicFile from '../asset/tetris.mp3';
 const music = new Audio(musicFile);
 
 const MusicPlayer = () => {
+
     const style ={
         fontSize: 20,
-        margin: 10,
     }
 
     const [playMusic, setPlayMusic] = useState(false);

@@ -113,13 +113,16 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     return <>
       <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
       <div className="App">
-        <Grid xMax={xMax} yMax={yMax} board={board} />
-        <div>
-          Next: <NextPieceGrid board={board} />
-          <div>Lines: {totalRemovedRows}</div>
+        <div className="Display">
+          <div>
+            <Grid xMax={xMax} yMax={yMax} board={board} />
+          </div>
+          <div>
+            Next: <NextPieceGrid board={board} />
+            <div style={{ margin: "20px 0" }}>Level: {level}</div>
+            <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
+          </div>
         </div>
-      </div>
-      <div>
         <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
       </div>
       <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
