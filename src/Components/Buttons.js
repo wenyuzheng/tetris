@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import MusicPlayer from './MusicPlayer';
 import './css/Buttons.css';
+import useLongPress from '../hooks/useLongPress';
 
 const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
 
     const moveCurrPieceButtons = ["down", "left", "right", "rotate"];
 
-    const [isMouseDown, setIsMouseDown] = useState(false);
+    // const handler = () => {
+    //     button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
+    //     setBoard(_.cloneDeep(myBoard));
+    // }
+    const handler = null;
 
-    let move = null;
+    const [onMouseDownHandler, onMouseUpHandler] = useLongPress(handler, 500, 50);
 
     return (
         <div>
@@ -18,8 +23,7 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
 
             <div>
                 {moveCurrPieceButtons.map((button) => {
-                    const mouseDownHandler = () => {
-                        setIsMouseDown(true);
+                    const handler = () => {
                         button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
                         setBoard(_.cloneDeep(myBoard));
                     }
@@ -27,16 +31,8 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
                     return (
                         <button key={button}
                             className="buttons"
-                            onMouseDown={() => {
-                                move = setTimeout(mouseDownHandler, 500)
-                            }}
-                            onMouseUp={() => {
-                                clearTimeout(move);
-                                if (!isMouseDown) {
-                                    mouseDownHandler();
-                                }
-                                setIsMouseDown(false);
-                            }}
+                            onMouseDown={onMouseDownHandler}
+                            onMouseUp={onMouseUpHandler}
                         >{button}</button>
                     )
                 })}
@@ -44,26 +40,5 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame }) => {
         </div>
     )
 }
-
-// const Buttons = ({myBoard, setBoard, setPauseGame, pauseGame}) => {
-//     const moveCurrPieceButtons = ["down", "left", "right", "rotate"];
-
-//     return (
-//         <div>
-//             {moveCurrPieceButtons.map((button) => {
-//                 return (
-//                     <button key={button}
-//                         onMouseDown={() => {
-//                             button === "rotate" ? myBoard.rotateCurrPiece("left") : myBoard.moveCurrPiece(button);
-//                             setBoard(_.cloneDeep(myBoard));
-//                         }}
-//                     >{button}</button>
-//                 )
-//             })}
-//             <MusicPlayer />
-//             <button onClick={() => setPauseGame(!pauseGame)}>{pauseGame ? "Play" : "Pause"}</button>
-//         </div>
-//     )
-// }
 
 export default Buttons;
