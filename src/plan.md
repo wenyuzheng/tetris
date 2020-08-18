@@ -28,5 +28,7 @@
 2. css: @media queries
 3. sound effect
 4. cannot move when pause (maybe: stop music when pause?)
+5. level: set long press moving speed into level selection
+6. styled div for nextPieceGrid
 
 1. paused page [later]

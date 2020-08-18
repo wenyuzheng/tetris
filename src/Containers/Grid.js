@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import useWindowSize from '../hooks/useWindowSize';
 
 const GridContainer = styled.div`
     width: ${props => props.squareLength * 10 + 9}px;
@@ -10,13 +9,13 @@ const GridContainer = styled.div`
     grid-template-columns: repeat(10, 1fr);
     gap: 1px;
     background-color: black;
-    margin-right: 20px;
     grid-auto-flow: column;
+    float: left;
 `
 
-const Grid = ({xMax, yMax, board}) => {
-    const [screenWidth, screenHeight] = useWindowSize();
-    const squareLength = Math.floor(screenWidth / 20);
+const Grid = ({ xMax, yMax, board, displayHeight}) => {
+    
+    const squareLength = (displayHeight - 20 - 19) / 20;
 
     const xIndices = Array.from(Array(xMax), (_, i) => i + 1);
     const yIndices = Array.from(Array(yMax), (_, i) => i + 1).reverse();

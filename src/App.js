@@ -8,6 +8,33 @@ import GameOverWindow from './Containers/GameOverWindow';
 import StartPage from './Containers/StartPage';
 import Grid from './Containers/Grid';
 import NextPieceGrid from './Components/NextPieceGrid';
+import styled from 'styled-components';
+import useWindowSize from './hooks/useWindowSize';
+import { app } from 'firebase';
+
+const AppContainer = styled.div`
+  width: ${props => props.appWidth}px;
+  height: ${props => props.appHeight}px;
+  margin: 0px auto;
+  box-sizing: border-box;
+  background-color: red;
+`
+
+const DisplayContainer = styled.div`
+  width: ${props => props.displayWidth}px;
+  height: ${props => props.displayHeight}px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: green;
+`
+const InfoPanelContainer = styled.div`
+  width: ${props => props.infoPanelWidth}px;
+  height: ${props => props.infoPanelHeight}px;
+  box-sizing: border-box;
+  padding: 15px;
+  float: left;
+  background-color: yellow;
+`
 
 const xMax = 10;
 const yMax = 20;
@@ -109,27 +136,68 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     setPauseGame(false);
   }
 
-  if(myBoard.currPiece) {
+  const [screenWidth, screenHeight] = useWindowSize();
+
+  const appWidth = Math.min(screenWidth, 420);
+  const appHeight = screenHeight;
+
+  const displayWidth = appWidth;
+  const displayHeight = appHeight * 0.55;
+
+  const squareLength = (displayHeight - 20 - 19) / 20;
+
+  const infoPanelWidth = displayWidth - 20 - squareLength * 10 - 9;
+  const infoPanelHeight = displayHeight - 20;
+
+  const buttonsContainerWidth = appWidth;
+  const buttonsContainerHeight = appHeight - displayHeight;
+
+  if (myBoard.currPiece) {
     return <>
-      <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
-      <div className="App">
-        <div className="Display">
-          <div>
-            <Grid xMax={xMax} yMax={yMax} board={board} />
-          </div>
-          <div>
+      <AppContainer appWidth={appWidth} appHeight={appHeight}>
+        {/* <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage} /> */}
+        <DisplayContainer displayWidth={displayWidth} displayHeight={displayHeight}>
+          <Grid xMax={xMax} yMax={yMax} board={board} displayHeight={displayHeight}/>
+          <InfoPanelContainer infoPanelWidth={infoPanelWidth} infoPanelHeight={infoPanelHeight}>
             Next: <NextPieceGrid board={board} />
             <div style={{ margin: "20px 0" }}>Level: {level}</div>
             <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
-          </div>
-        </div>
-        <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
-      </div>
-      <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
+          </InfoPanelContainer>
+        </DisplayContainer>
+        <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} 
+          buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}/>
+      </AppContainer>
+        
+        
+        {/* <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} /> */}
     </>
   } else {
     return <>Loading...</>
   }
+
+
+
+  // if(myBoard.currPiece) {
+  //   return <>
+  //     <div className="App">
+  //     <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
+  //       <div className="Display">
+  //         <div>
+  //           <Grid xMax={xMax} yMax={yMax} board={board} />
+  //         </div>
+  //         <div>
+  //           Next: <NextPieceGrid board={board} />
+  //           <div style={{ margin: "20px 0" }}>Level: {level}</div>
+  //           <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
+  //         </div>
+  //       </div>
+  //       <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
+  //     <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
+  //     </div>
+  //   </>
+  // } else {
+  //   return <>Loading...</>
+  // }
 }
 
 export default App;

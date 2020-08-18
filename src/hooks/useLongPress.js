@@ -1,22 +1,28 @@
-export default (callBack, holdDelay, intervalTimer) => {
-    let timeOut = null;
-    let interval = null;
+import { useState, useEffect } from 'react';
 
-    const onMouseDownHandler = () => {
-        timeOut = setTimeout(() => {
-            timeOut = null;
-            interval = setInterval(() => { callBack() }, intervalTimer)
-        }, holdDelay)
-    }
+export default (callback, ms) => {
 
-    const onMouseUpHandler = () => {
-        if (timeOut) {
-            clearTimeout(timeOut);
-            callBack();
+    const [startLongPress, setStartLongPress] = useState(false);
+
+    useEffect(() => {
+        let timeOut;
+        if (startLongPress) {
+            timeOut = setTimeout(() => callback(), ms);
         } else {
-            clearInterval(interval);
+            clearTimeout(timeOut);
         }
-    } 
 
-    return [onMouseDownHandler, onMouseUpHandler]
+        return () => {
+            clearTimeout(timeOut);
+        };
+    }, [callback, ms, startLongPress]);
+
+    return {
+        onMouseDown: () => setStartLongPress(true),
+        onMouseUp: () => setStartLongPress(false),
+        onMouseLeave: () => setStartLongPress(false),
+        onTouchStart: () => setStartLongPress(true),
+        onTouchEnd: () => setStartLongPress(false),
+        onClick: () => callback(),
+    };
 }
