@@ -30,12 +30,16 @@
 }
 
 .home-button {
-    margin: 10px 100px;
-    font-size: 20px;
-    background-color: grey;
-    color: white;
+  margin: 10px 10%;
+  font-size: 20px;
+  background-color: grey;
+  color: white;
 }
 
 .home-button:hover {
-    background-color: #4846aa;
+  background-color: #4846aa;
+}
+
+.loader {
+  margin: 20% 50%;
 }

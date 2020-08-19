@@ -10,14 +10,13 @@ import Grid from './Containers/Grid';
 import NextPieceGrid from './Components/NextPieceGrid';
 import styled from 'styled-components';
 import useWindowSize from './hooks/useWindowSize';
-import { app } from 'firebase';
 
 const AppContainer = styled.div`
   width: ${props => props.appWidth}px;
   height: ${props => props.appHeight}px;
   margin: 0px auto;
   box-sizing: border-box;
-  background-color: red;
+  // background-color: red;
 `
 
 const DisplayContainer = styled.div`
@@ -25,7 +24,7 @@ const DisplayContainer = styled.div`
   height: ${props => props.displayHeight}px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: green;
+  // background-color: green;
 `
 const InfoPanelContainer = styled.div`
   width: ${props => props.infoPanelWidth}px;
@@ -33,7 +32,7 @@ const InfoPanelContainer = styled.div`
   box-sizing: border-box;
   padding: 15px;
   float: left;
-  background-color: yellow;
+  // background-color: yellow;
 `
 
 const xMax = 10;
@@ -155,7 +154,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   if (myBoard.currPiece) {
     return <>
       <AppContainer appWidth={appWidth} appHeight={appHeight}>
-        {/* <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage} /> */}
+        <StartPage appWidth={appWidth} appHeight={appHeight} level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage} />
         <DisplayContainer displayWidth={displayWidth} displayHeight={displayHeight}>
           <Grid xMax={xMax} yMax={yMax} board={board} displayHeight={displayHeight}/>
           <InfoPanelContainer infoPanelWidth={infoPanelWidth} infoPanelHeight={infoPanelHeight}>
@@ -166,10 +165,8 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
         </DisplayContainer>
         <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} 
           buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}/>
+        <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} />
       </AppContainer>
-        
-        
-        {/* <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} /> */}
     </>
   } else {
     return <>Loading...</>

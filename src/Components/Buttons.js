@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import MusicPlayer from '../hooks/useMusicPlayer';
+import useMusicPlayer from '../hooks/useMusicPlayer';
 import './css/Buttons.css';
 import useLongPress from '../hooks/useLongPress';
 import styled from 'styled-components';
@@ -20,14 +20,14 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerW
     const ButtonsContainer = styled.div`
         width: ${buttonsContainerWidth}px;
         height: ${buttonsContainerHeight}px;
-        background-color: purple;
+        // background-color: purple;
     `
 
     const OptionButtonsContainer = styled.div`
         width: ${optionButtonsContainerWidth}px;
         height: ${optionButtonsContainerHeight}px;
         margin: auto;
-        background-color: aquamarine;
+        // background-color: aquamarine;
     `
 
     const MoveButtonsGrid = styled.div`
@@ -38,7 +38,7 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerW
         grid-template-columns: repeat(3, 1fr);
         gap: 1px;
         margin: 10px auto;
-        background-color: pink;
+        // background-color: pink;
     `
 
     const OptionButton = styled.button`
@@ -46,9 +46,9 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerW
         height: ${optionButtonsHeight}px;
         text-align: center;
         text-decoration: none;
-        font-size: 20px;
+        font-size: 18px;
         margin: auto 5px;
-        background-color: red;
+        // background-color: red;
     `
 
     const MoveCurrPieceButton = styled.button`
@@ -57,7 +57,7 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerW
         border-radius: 50%;
         text-align: center;
         text-decoration: none;
-        font-size: 20px;
+        font-size: 18px;
         margin: auto;
     `
 
@@ -89,8 +89,7 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerW
     return (
         <ButtonsContainer>
             <OptionButtonsContainer>
-                <OptionButton {...MusicPlayer()}>Music</OptionButton>
-                {/* <MusicPlayer optionButtonsHeight={optionButtonsHeight} optionButtonsWidth={optionButtonsWidth}/> */}
+                <OptionButton {...useMusicPlayer()}>Music</OptionButton>
                 <OptionButton>Sound</OptionButton>
                 <OptionButton onClick={() => setPauseGame(!pauseGame)}>{pauseGame ? "Play" : "Pause"}</OptionButton>
             </OptionButtonsContainer>
