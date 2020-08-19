@@ -5,7 +5,7 @@ import './css/Buttons.css';
 import useLongPress from '../hooks/useLongPress';
 import styled from 'styled-components';
 
-const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerWidth , buttonsContainerHeight }) => {
+const Buttons = ({ setPressed, myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerWidth , buttonsContainerHeight }) => {
 
     const optionButtonsContainerWidth = buttonsContainerWidth;
     const optionButtonsContainerHeight = buttonsContainerHeight * 0.1;
@@ -64,27 +64,31 @@ const Buttons = ({ myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerW
     const rotateHandler = () => {
         myBoard.rotateCurrPiece("left");
         setBoard(_.cloneDeep(myBoard));
+        setPressed((prev) => prev + " u")
     }
 
     const leftHandler = () => {
         myBoard.moveCurrPiece("left");
         setBoard(_.cloneDeep(myBoard));
+        setPressed((prev) => prev + " l")
     }
 
     const rightHandler = () => {
         myBoard.moveCurrPiece("right");
         setBoard(_.cloneDeep(myBoard));
+        setPressed((prev) => prev + " r")
     }
 
     const downHandler = () => {
         myBoard.moveCurrPiece("down");
         setBoard(_.cloneDeep(myBoard));
+        setPressed((prev) => prev + " d")
     }
 
-    const rotateLongPressHandler = useLongPress(rotateHandler, 50);
-    const leftLongPressHandler = useLongPress(leftHandler, 50);
-    const rightLongPressHandler = useLongPress(rightHandler, 50);
-    const downLongPressHandler = useLongPress(downHandler, 50);
+    const rotateLongPressHandler = useLongPress(rotateHandler, 200);
+    const leftLongPressHandler = useLongPress(leftHandler, 200);
+    const rightLongPressHandler = useLongPress(rightHandler, 200);
+    const downLongPressHandler = useLongPress(downHandler, 200);
 
     return (
         <ButtonsContainer>

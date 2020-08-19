@@ -63,6 +63,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   const [displayStartPage, setDisplayStartPage] = useState(true);
   const [dropSpeed, setDropSpeed] = useState(1000);
   const [level, setLevel] = useState(1);
+  const [pressed, setPressed] = useState("");
 
   const currToNextPieceHandler = () => {
     myBoard.currPiece = myBoard.nextPiece;
@@ -161,9 +162,10 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
             Next: <NextPieceGrid board={board} />
             <div style={{ margin: "20px 0" }}>Level: {level}</div>
             <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
+            <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div>
           </InfoPanelContainer>
         </DisplayContainer>
-        <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} 
+        <Buttons setPressed={setPressed} myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} 
           buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}/>
         <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} />
       </AppContainer>
