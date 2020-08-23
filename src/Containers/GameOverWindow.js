@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './css/GameOverWindow.css';
 import firebase from '../firebase';
 
-const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage }) => {
+const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage, setEndOfGame }) => {
     const [display, setDisplay] = useState("none");
     const [userName, setUserName] = useState("");
     
     useEffect(() => {
-        setDisplay(endOfGame ? "" : "none")
+        setDisplay(endOfGame ? "block" : "none")
     }, [endOfGame])
 
     const saveHandler = () => {
@@ -27,6 +27,7 @@ const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage }) =>
     const cancelHandler = () => {
         setDisplay("none");
         setDisplayStartPage(true);
+        // setEndOfGame(false);
     }
 
     const style = {margin: "20px"};

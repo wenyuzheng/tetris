@@ -10,6 +10,7 @@ import Grid from './Containers/Grid';
 import NextPieceGrid from './Components/NextPieceGrid';
 import styled from 'styled-components';
 import useWindowSize from './hooks/useWindowSize';
+import PausePage from './Containers/PausePage';
 
 const AppContainer = styled.div`
   width: ${props => props.appWidth}px;
@@ -64,6 +65,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   const [dropSpeed, setDropSpeed] = useState(1000);
   const [level, setLevel] = useState(1);
   const [pressed, setPressed] = useState("");
+  const [displayPausePage, setDisplayPausePage] = useState(false);
 
   const currToNextPieceHandler = () => {
     myBoard.currPiece = myBoard.nextPiece;
@@ -134,6 +136,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     setEndOfGame(false);
     setDisplayStartPage(false); 
     setPauseGame(false);
+    setDisplayPausePage(false);
   }
 
   const [screenWidth, screenHeight] = useWindowSize();
@@ -155,7 +158,9 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   if (myBoard.currPiece) {
     return <>
       <AppContainer appWidth={appWidth} appHeight={appHeight}>
+
         <StartPage appWidth={appWidth} appHeight={appHeight} level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage} />
+        
         <DisplayContainer displayWidth={displayWidth} displayHeight={displayHeight}>
           <Grid xMax={xMax} yMax={yMax} board={board} displayHeight={displayHeight}/>
           <InfoPanelContainer infoPanelWidth={infoPanelWidth} infoPanelHeight={infoPanelHeight}>
@@ -165,38 +170,19 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
             <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div>
           </InfoPanelContainer>
         </DisplayContainer>
-        <Buttons setPressed={setPressed} myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} 
+        
+        <Buttons displayPausePage={displayPausePage} setDisplayPausePage={setDisplayPausePage} setPressed={setPressed} 
+          myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} 
           buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}/>
-        <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} />
+        
+        {displayPausePage ? <PausePage myBoard={myBoard} setBoard={setBoard} setDisplayPausePage={setDisplayPausePage} setPauseGame={setPauseGame} setDisplayStartPage={setDisplayStartPage}/> : null}
+        
+        <GameOverWindow setEndOfGame={setEndOfGame} endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} />
       </AppContainer>
     </>
   } else {
     return <>Loading...</>
   }
-
-
-
-  // if(myBoard.currPiece) {
-  //   return <>
-  //     <div className="App">
-  //     <StartPage level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage}/> 
-  //       <div className="Display">
-  //         <div>
-  //           <Grid xMax={xMax} yMax={yMax} board={board} />
-  //         </div>
-  //         <div>
-  //           Next: <NextPieceGrid board={board} />
-  //           <div style={{ margin: "20px 0" }}>Level: {level}</div>
-  //           <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
-  //         </div>
-  //       </div>
-  //       <Buttons myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} />
-  //     <GameOverWindow endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage}/>
-  //     </div>
-  //   </>
-  // } else {
-  //   return <>Loading...</>
-  // }
 }
 
 export default App;

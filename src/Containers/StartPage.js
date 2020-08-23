@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 const StartPage = ({ level, displayStartPage, startGameHandler, setLevel }) => {
 
-    const [display, setDisplay] = useState("");
+    const [display, setDisplay] = useState("block");
 
     useEffect(() => {
-        setDisplay(displayStartPage ? "" : "none")
+        setDisplay(displayStartPage ? "block" : "none")
     }, [displayStartPage])
 
     return (
