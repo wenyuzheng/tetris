@@ -3,12 +3,7 @@ import './css/GameOverWindow.css';
 import firebase from '../firebase';
 
 const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage, setEndOfGame }) => {
-    const [display, setDisplay] = useState("none");
     const [userName, setUserName] = useState("");
-    
-    useEffect(() => {
-        setDisplay(endOfGame ? "block" : "none")
-    }, [endOfGame])
 
     const saveHandler = () => {
         if (userName === "" || userName === null) {
@@ -18,22 +13,21 @@ const GameOverWindow = ({ endOfGame, totalRemovedRows, setDisplayStartPage, setE
             let timeId = currTime.getTime();
             const scoreObj = {score: totalRemovedRows, timeStamp: timeId, userName: userName}
             firebase.database().ref(`/scores/${userName}${timeId}`).set(scoreObj);
-            setDisplay("none");
             setDisplayStartPage(true);
             setUserName("");
+            setEndOfGame(false);
         }
     }
 
     const cancelHandler = () => {
-        setDisplay("none");
         setDisplayStartPage(true);
-        // setEndOfGame(false);
+        setEndOfGame(false);
     }
 
     const style = {margin: "20px"};
 
     return (
-        <div className="modal" style={{ display: display}}>
+        <div className="modal" >
             <div className="modal-content">
                 <h1>GAME OVER</h1>
                 <h3 style={style}>Your Score is: {totalRemovedRows}</h3>

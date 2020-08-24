@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default ( { setLevel, level} ) => {
+const style = {
+    backgroundColor: "lightGrey",
+    padding: 10,
+    fontSize: 18,
+    border: "1px solid black",
+    margin: "10px auto",
+}
+
+const levels = {
+    1: {
+        delay: 2000,
+        dropSpeed: 1000,
+    },
+    2: {
+        delay: 1500,
+        dropSpeed: 500,
+    },
+    3: {
+        delay: 800,
+        dropSpeed: 300,
+    },
+}
+
+export default ({ setLevel, level, setDelay, setDropSpeed } ) => {
     
-    const style = {
-        backgroundColor: "lightGrey",
-        padding: 10,
-        fontSize: 18,
-        border: "1px solid black",
-        margin: "10px auto",
-    }
+    useEffect(() => {
+        setDelay(levels[level].delay)
+        setDropSpeed(levels[level].dropSpeed)
+    }, [setLevel, level])
 
     return (
         <div>

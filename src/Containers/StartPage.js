@@ -3,7 +3,7 @@ import "./css/StartPage.css";
 import SelectLevel from '../Components/SelectLevel';
 import { Link } from 'react-router-dom';
 
-const StartPage = ({ level, displayStartPage, startGameHandler, setLevel }) => {
+const StartPage = ({ setDelay, setDropSpeed, setLevel, level, displayStartPage, startGameHandler }) => {
 
     const [display, setDisplay] = useState("block");
 
@@ -18,7 +18,7 @@ const StartPage = ({ level, displayStartPage, startGameHandler, setLevel }) => {
                 <Link to="/leaderboard">
                     <button className="leaderboard-button" >Leaderboard</button>
                 </Link>
-                <SelectLevel setLevel={setLevel} level={level}/>
+                <SelectLevel setLevel={setLevel} level={level} setDelay={setDelay} setDropSpeed={setDropSpeed}/>
                 <button className="start-button" onClick={startGameHandler}>Start Game</button>
             </div>
         </div>

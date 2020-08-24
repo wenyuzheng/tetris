@@ -8,12 +8,14 @@ const useMusicPlayer = (pauseGame) => {
     const [playMusic, setPlayMusic] = useState(false);
 
     useEffect(() => {
-        pauseGame ? setPlayMusic(false) : setPlayMusic(true);
-    }, [pauseGame])
-
-    useEffect(() => {
         playMusic ? music.play() : music.pause();
     }, [playMusic])
+
+    useEffect(() => {
+        if (playMusic) {
+            pauseGame ? music.pause() : music.play();
+        }
+    }, [pauseGame])
 
     return {
         onClick: () => setPlayMusic(!playMusic),

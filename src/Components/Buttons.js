@@ -8,14 +8,12 @@ import styled from 'styled-components';
     const ButtonsContainer = styled.div`
         width: ${props => props.buttonsContainerWidth}px;
         height: ${props => props.buttonsContainerHeight}px;
-        // background-color: purple;
     `
 
     const OptionButtonsContainer = styled.div`
         width: ${ props => props.optionButtonsContainerWidth}px;
         height: ${props => props.optionButtonsContainerHeight}px;
         margin: auto;
-        // background-color: aquamarine;
     `
 
     const MoveButtonsGrid = styled.div`
@@ -26,7 +24,6 @@ import styled from 'styled-components';
         grid-template-columns: repeat(3, 1fr);
         gap: 1px;
         margin: 10px auto;
-        // background-color: pink;
     `
 
     const OptionButton = styled.button`
@@ -36,7 +33,6 @@ import styled from 'styled-components';
         text-decoration: none;
         font-size: 18px;
         margin: auto 5px;
-        // background-color: red;
     `
 
     const MoveCurrPieceButton = styled.button`
@@ -60,8 +56,6 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPauseG
     const moveButtonsContainerHeight = buttonsContainerHeight * 0.9 - 2 - 20;
     
     const moveButtonsHeight = moveButtonsContainerHeight / 3;
-
-
 
     const pauseHandler = () => {
         setPauseGame(!pauseGame);
@@ -97,18 +91,23 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPauseG
     const rightLongPressHandler = useLongPress(rightHandler, 200);
     const downLongPressHandler = useLongPress(downHandler, 200);
 
+    const preventContextMenu = (e) => {
+        e.preventDefault();
+        setPressed((prev) => prev + " CM")
+    }
+
     return (
         <ButtonsContainer buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}>
             <OptionButtonsContainer optionButtonsContainerWidth={optionButtonsContainerWidth} optionButtonsContainerHeight={optionButtonsContainerHeight}>
                 <OptionButton {...useMusicPlayer(pauseGame)} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Music</OptionButton>
-                <OptionButton optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Sound</OptionButton>
+                {/* <OptionButton optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Sound</OptionButton> */}
                 <OptionButton onClick={pauseHandler} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>{pauseGame ? "Play" : "Pause"}</OptionButton>
             </OptionButtonsContainer>
             <MoveButtonsGrid moveButtonsContainerHeight={moveButtonsContainerHeight} >
-                <MoveCurrPieceButton {...rotateLongPressHandler} style={{ gridArea: "1 / 2 / 2 / 3" }} moveButtonsHeight={moveButtonsHeight}>Rotate</MoveCurrPieceButton>
-                <MoveCurrPieceButton {...leftLongPressHandler} style={{ gridArea: "2 / 1 / 3 / 2" }} moveButtonsHeight={moveButtonsHeight}>Left</MoveCurrPieceButton>
-                <MoveCurrPieceButton {...rightLongPressHandler} style={{ gridArea: "2 / 3 / 3 / 4" }} moveButtonsHeight={moveButtonsHeight}>Right</MoveCurrPieceButton>
-                <MoveCurrPieceButton {...downLongPressHandler} style={{ gridArea: "3 / 2 / 4 / 3" }} moveButtonsHeight={moveButtonsHeight}>Down</MoveCurrPieceButton>
+                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...rotateLongPressHandler} style={{ gridArea: "1 / 2 / 2 / 3" }} moveButtonsHeight={moveButtonsHeight}>Rotate</MoveCurrPieceButton>
+                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...leftLongPressHandler} style={{ gridArea: "2 / 1 / 3 / 2" }} moveButtonsHeight={moveButtonsHeight}>Left</MoveCurrPieceButton>
+                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...rightLongPressHandler} style={{ gridArea: "2 / 3 / 3 / 4" }} moveButtonsHeight={moveButtonsHeight}>Right</MoveCurrPieceButton>
+                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...downLongPressHandler} style={{ gridArea: "3 / 2 / 4 / 3" }} moveButtonsHeight={moveButtonsHeight}>Down</MoveCurrPieceButton>
             </MoveButtonsGrid>
         </ButtonsContainer>
     )

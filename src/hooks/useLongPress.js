@@ -21,10 +21,8 @@ export default (callback, ms) => {
         onMouseDown: () => setStartLongPress(true),
         onMouseUp: () => setStartLongPress(false),
         onMouseLeave: () => setStartLongPress(false),
-        onMouseOut: () => setStartLongPress(false),
         onTouchStart: () => setStartLongPress(true),
         onTouchEnd: () => setStartLongPress(false),
-        onTouchMove: () => setStartLongPress(false),
-        // onTouchCancel: () => setStartLongPress(false),
+        onClick: () => callback(),
     };
 }

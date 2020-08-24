@@ -17,7 +17,7 @@ const AppContainer = styled.div`
   height: ${props => props.appHeight}px;
   margin: 0px auto;
   box-sizing: border-box;
-  // background-color: red;
+  user-select: none;
 `
 
 const DisplayContainer = styled.div`
@@ -25,7 +25,6 @@ const DisplayContainer = styled.div`
   height: ${props => props.displayHeight}px;
   padding: 10px;
   box-sizing: border-box;
-  // background-color: green;
 `
 const InfoPanelContainer = styled.div`
   width: ${props => props.infoPanelWidth}px;
@@ -33,27 +32,11 @@ const InfoPanelContainer = styled.div`
   box-sizing: border-box;
   padding: 15px;
   float: left;
-  // background-color: yellow;
 `
 
 const xMax = 10;
 const yMax = 20;
 const myBoard = new Board(null, [], generatePiece(xMax, yMax), xMax, yMax);
-
-const levels = {
-  1: {
-    delay: 2000,
-    dropSpeed: 1000,
-  },
-  2: {
-    delay: 1500,
-    dropSpeed: 500,
-  },
-  3: {
-    delay: 800,
-    dropSpeed: 300,
-  },
-}
 
 const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
 
@@ -116,11 +99,6 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   }, [doFinalCheck])
 
   useEffect(() => {
-    setDelay(levels[level].delay)
-    setDropSpeed(levels[level].dropSpeed)
-  }, [setLevel, level])
-
-  useEffect(() => {
     if (level <= 1 && totalRemovedRows > 5) {
       setLevel(1);
     } else if (level <= 2 && totalRemovedRows >= 5 && totalRemovedRows < 10) {
@@ -133,7 +111,6 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   const startGameHandler = () => {
     myBoard.boardCells = [];
     setBoard(_.cloneDeep(myBoard));
-    setEndOfGame(false);
     setDisplayStartPage(false); 
     setPauseGame(false);
     setDisplayPausePage(false);
@@ -159,7 +136,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     return <>
       <AppContainer appWidth={appWidth} appHeight={appHeight}>
 
-        <StartPage appWidth={appWidth} appHeight={appHeight} level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage} />
+        <StartPage appWidth={appWidth} appHeight={appHeight} setDelay={setDelay} setDropSpeed={setDropSpeed} level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage} />
         
         <DisplayContainer displayWidth={displayWidth} displayHeight={displayHeight}>
           <Grid xMax={xMax} yMax={yMax} board={board} displayHeight={displayHeight}/>
@@ -177,7 +154,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
         
         {displayPausePage ? <PausePage myBoard={myBoard} setBoard={setBoard} setDisplayPausePage={setDisplayPausePage} setPauseGame={setPauseGame} setDisplayStartPage={setDisplayStartPage}/> : null}
         
-        <GameOverWindow setEndOfGame={setEndOfGame} endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} />
+        {endOfGame ? <GameOverWindow setEndOfGame={setEndOfGame} endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} /> : null}
       </AppContainer>
     </>
   } else {

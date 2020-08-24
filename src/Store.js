@@ -14,6 +14,7 @@ const Store = () => {
             }, delay)
         }
     }, [timerStarted])
+    
     return <App setDelay={setDelay} doFinalCheck={doFinalCheck} setDoFinalCheck={setDoFinalCheck} timerStarted={timerStarted} setTimerStarted={setTimerStarted}/>
 }
 
