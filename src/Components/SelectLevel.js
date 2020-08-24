@@ -23,12 +23,22 @@ const levels = {
     },
 }
 
-export default ({ setLevel, level, setDelay, setDropSpeed } ) => {
+export default ({ setLevel, level, setDelay, setDropSpeed, totalRemovedRows } ) => {
     
     useEffect(() => {
         setDelay(levels[level].delay)
         setDropSpeed(levels[level].dropSpeed)
-    }, [setLevel, level])
+    }, [setLevel, level]);
+
+    useEffect(() => {
+        if (level <= 1 && totalRemovedRows > 5) {
+            setLevel(1);
+        } else if (level <= 2 && totalRemovedRows >= 5 && totalRemovedRows < 10) {
+            setLevel(2);
+        } else if (totalRemovedRows >= 10) {
+            setLevel(3);
+        }
+    }, [totalRemovedRows]);
 
     return (
         <div>

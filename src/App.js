@@ -18,6 +18,7 @@ const AppContainer = styled.div`
   margin: 0px auto;
   box-sizing: border-box;
   user-select: none;
+  touch-action: manipulation;
 `
 
 const DisplayContainer = styled.div`
@@ -26,6 +27,7 @@ const DisplayContainer = styled.div`
   padding: 10px;
   box-sizing: border-box;
 `
+
 const InfoPanelContainer = styled.div`
   width: ${props => props.infoPanelWidth}px;
   height: ${props => props.infoPanelHeight}px;
@@ -98,16 +100,6 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     }
   }, [doFinalCheck])
 
-  useEffect(() => {
-    if (level <= 1 && totalRemovedRows > 5) {
-      setLevel(1);
-    } else if (level <= 2 && totalRemovedRows >= 5 && totalRemovedRows < 10) {
-      setLevel(2);
-    } else if (totalRemovedRows >= 10) {
-      setLevel(3);
-    }
-  }, [totalRemovedRows])
-
   const startGameHandler = () => {
     myBoard.boardCells = [];
     setBoard(_.cloneDeep(myBoard));
@@ -136,8 +128,12 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     return <>
       <AppContainer appWidth={appWidth} appHeight={appHeight}>
 
-        <StartPage appWidth={appWidth} appHeight={appHeight} setDelay={setDelay} setDropSpeed={setDropSpeed} level={level} setLevel={setLevel} startGameHandler={startGameHandler} displayStartPage={displayStartPage} />
-        
+        {displayStartPage ? 
+        <StartPage appWidth={appWidth} appHeight={appHeight} 
+          setDelay={setDelay} setDropSpeed={setDropSpeed} level={level} setLevel={setLevel} 
+          totalRemovedRows={totalRemovedRows} startGameHandler={startGameHandler}/>
+        : null }
+
         <DisplayContainer displayWidth={displayWidth} displayHeight={displayHeight}>
           <Grid xMax={xMax} yMax={yMax} board={board} displayHeight={displayHeight}/>
           <InfoPanelContainer infoPanelWidth={infoPanelWidth} infoPanelHeight={infoPanelHeight}>
