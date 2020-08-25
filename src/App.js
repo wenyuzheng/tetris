@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import _ from "lodash";
 import styled from 'styled-components';
+
 import Board from './lib/lib/Board';
 import generatePiece from './lib/lib/generatePiece';
+
 import Buttons from './components/gamepage/Buttons';
 import Grid from './components/gamepage/Grid';
 import NextPieceGrid from './components/gamepage/NextPieceGrid';
+import Loading from './components/Loading';
+
 import GameOverWindow from './scenes/GameOverWindow';
 import StartPage from './scenes/StartPage';
 import PausePage from './scenes/PausePage';
+
 import useWindowSize from './hooks/useWindowSize';
+
 import useSound from 'use-sound';
 import clearSnd from './asset/clear.mp3';
 import gameOverSnd from './asset/gameOver.mp3';
@@ -54,6 +60,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   const [level, setLevel] = useState(1);
   const [pressed, setPressed] = useState("");
   const [displayPausePage, setDisplayPausePage] = useState(false);
+  const [playSound, setPlaySound] = useState(true);
 
   const [clearSound] = useSound(clearSnd);
   const [gameOverSound] = useSound(gameOverSnd);
@@ -69,8 +76,10 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   }, [])
 
   useEffect(() => {
-    clearSound();
-  }, [totalRemovedRows])
+    if (playSound) {
+      clearSound();
+    }
+  }, [totalRemovedRows, playSound])
 
   useEffect(() => {
     if (!pauseGame) {
@@ -88,10 +97,12 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
         setEndOfGame(true);
         setPauseGame(true);
         setLevel(1);
-        gameOverSound();
+        if (playSound) {
+          gameOverSound();
+        }
       }
     }
-  }, [board])
+  }, [board, playSound])
 
   useEffect(() => {
     if (!endOfGame && !timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
@@ -151,21 +162,28 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
             Next: <NextPieceGrid board={board} />
             <div style={{ margin: "20px 0" }}>Level: {level}</div>
             <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
-            <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div>
+            {/* <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div> */}
           </InfoPanelContainer>
         </DisplayContainer>
         
-        <Buttons displayPausePage={displayPausePage} setDisplayPausePage={setDisplayPausePage} setPressed={setPressed} 
-          myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} pauseGame={pauseGame} 
+        <Buttons displayPausePage={displayPausePage} setDisplayPausePage={setDisplayPausePage} 
+          setPressed={setPressed} myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} 
+          pauseGame={pauseGame} playSound={playSound} setPlaySound={setPlaySound}
           buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}/>
         
-        {displayPausePage ? <PausePage myBoard={myBoard} setBoard={setBoard} setDisplayPausePage={setDisplayPausePage} setPauseGame={setPauseGame} setDisplayStartPage={setDisplayStartPage}/> : null}
+        {displayPausePage ? 
+        <PausePage myBoard={myBoard} setBoard={setBoard} setDisplayPausePage={setDisplayPausePage} 
+          setPauseGame={setPauseGame} setDisplayStartPage={setDisplayStartPage}/> 
+        : null}
         
-        {endOfGame ? <GameOverWindow setEndOfGame={setEndOfGame} endOfGame={endOfGame} totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} /> : null}
+        {endOfGame ? 
+        <GameOverWindow setEndOfGame={setEndOfGame} endOfGame={endOfGame} 
+          totalRemovedRows={totalRemovedRows} setDisplayStartPage={setDisplayStartPage} /> 
+        : null}
       </AppContainer>
     </>
   } else {
-    return <>Loading...</>
+    return <Loading/>
   }
 }
 

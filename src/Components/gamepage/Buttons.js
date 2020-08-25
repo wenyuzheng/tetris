@@ -45,7 +45,8 @@ import styled from 'styled-components';
         margin: auto;
     `
 
-const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPauseGame, pauseGame, buttonsContainerWidth , buttonsContainerHeight }) => {
+const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPlaySound, playSound,
+    setPauseGame, pauseGame, buttonsContainerWidth , buttonsContainerHeight }) => {
 
     const optionButtonsContainerWidth = buttonsContainerWidth;
     const optionButtonsContainerHeight = buttonsContainerHeight * 0.1;
@@ -95,7 +96,7 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPauseG
         <ButtonsContainer buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}>
             <OptionButtonsContainer optionButtonsContainerWidth={optionButtonsContainerWidth} optionButtonsContainerHeight={optionButtonsContainerHeight}>
                 <OptionButton {...useMusicPlayer(pauseGame)} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Music</OptionButton>
-                {/* <OptionButton optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Sound</OptionButton> */}
+                <OptionButton onClick={() => { setPlaySound(!playSound) }} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Sound</OptionButton>
                 <OptionButton onClick={pauseHandler} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>{pauseGame ? "Play" : "Pause"}</OptionButton>
             </OptionButtonsContainer>
             <MoveButtonsGrid moveButtonsContainerHeight={moveButtonsContainerHeight} >

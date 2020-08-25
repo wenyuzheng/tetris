@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import firebase from '../../firebase';
 import '../css/LeaderBoard.css';
 import { Link } from 'react-router-dom';
-import Loader from 'react-loader-spinner';
 
 const LeaderBoard = () => {
 
@@ -45,9 +44,7 @@ const LeaderBoard = () => {
             </div>
         </>
     } else {
-        return (
-            <Loader type="BallTriangle" color="#00BFFF" height={80} width={80} className="loader"/>
-        )
+        <Loading/>
     }    
 }
 
