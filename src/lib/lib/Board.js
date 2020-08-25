@@ -5,7 +5,7 @@ class Board {
         this.currPiece = currPiece;
         this.boardCells = boardCells;
         this.nextPiece = nextPiece;
-        this.xMax =xMax;
+        this.xMax = xMax;
         this.yMax = yMax;
     }
 

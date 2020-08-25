@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import musicFile from '../asset/tetris.mp3';
+import musicFile from '../asset/music.mp3';
 
 const music = new Audio(musicFile);
 
@@ -15,7 +15,7 @@ const useMusicPlayer = (pauseGame) => {
         if (playMusic) {
             pauseGame ? music.pause() : music.play();
         }
-    }, [pauseGame])
+    }, [pauseGame, playMusic])
 
     return {
         onClick: () => setPlayMusic(!playMusic),

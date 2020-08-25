@@ -1,6 +1,6 @@
 import React from 'react';
 import "./css/StartPage.css";
-import SelectLevel from '../Components/SelectLevel';
+import SelectLevel from '../components/startpage/SelectLevel';
 import { Link } from 'react-router-dom';
 
 const StartPage = ({ setDelay, setDropSpeed, setLevel, level, totalRemovedRows, startGameHandler }) => {

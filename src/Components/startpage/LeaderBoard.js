@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import firebase from '../firebase';
-import './css/LeaderBoard.css';
+import firebase from '../../firebase';
+import '../css/LeaderBoard.css';
 import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 

@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import _ from "lodash";
+import styled from 'styled-components';
 import Board from './lib/lib/Board';
 import generatePiece from './lib/lib/generatePiece';
-import Buttons from './Components/Buttons';
-import GameOverWindow from './Containers/GameOverWindow';
-import StartPage from './Containers/StartPage';
-import Grid from './Containers/Grid';
-import NextPieceGrid from './Components/NextPieceGrid';
-import styled from 'styled-components';
+import Buttons from './components/gamepage/Buttons';
+import Grid from './components/gamepage/Grid';
+import NextPieceGrid from './components/gamepage/NextPieceGrid';
+import GameOverWindow from './scenes/GameOverWindow';
+import StartPage from './scenes/StartPage';
+import PausePage from './scenes/PausePage';
 import useWindowSize from './hooks/useWindowSize';
-import PausePage from './Containers/PausePage';
+import useSound from 'use-sound';
+import clearSnd from './asset/clear.mp3';
+import gameOverSnd from './asset/gameOver.mp3';
 
 const AppContainer = styled.div`
   width: ${props => props.appWidth}px;
@@ -52,6 +55,9 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   const [pressed, setPressed] = useState("");
   const [displayPausePage, setDisplayPausePage] = useState(false);
 
+  const [clearSound] = useSound(clearSnd);
+  const [gameOverSound] = useSound(gameOverSnd);
+
   const currToNextPieceHandler = () => {
     myBoard.currPiece = myBoard.nextPiece;
     myBoard.nextPiece = generatePiece(xMax, yMax);
@@ -61,6 +67,10 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   useEffect(() => {
     currToNextPieceHandler();
   }, [])
+
+  useEffect(() => {
+    clearSound();
+  }, [totalRemovedRows])
 
   useEffect(() => {
     if (!pauseGame) {
@@ -78,6 +88,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
         setEndOfGame(true);
         setPauseGame(true);
         setLevel(1);
+        gameOverSound();
       }
     }
   }, [board])
