@@ -8,7 +8,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import LeaderBoard from './Components/LeaderBoard';
+import LeaderBoard from './components/startpage/LeaderBoard';
 
 ReactDOM.render(
   <BrowserRouter>

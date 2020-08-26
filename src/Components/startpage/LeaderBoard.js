@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import firebase from '../../firebase';
 import '../css/LeaderBoard.css';
 import { Link } from 'react-router-dom';
+import Loading from '../Loading';
 
 const LeaderBoard = () => {
 
@@ -44,7 +45,7 @@ const LeaderBoard = () => {
             </div>
         </>
     } else {
-        <Loading/>
+        return <Loading/>
     }    
 }
 
