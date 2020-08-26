@@ -18,8 +18,10 @@ import PausePage from './scenes/PausePage';
 import useWindowSize from './hooks/useWindowSize';
 
 import useSound from 'use-sound';
-import clearSnd from './asset/clear.mp3';
-import gameOverSnd from './asset/gameOver.mp3';
+import clearSnd from './asset/sound/clear.mp3';
+import gameOverSnd from './asset/sound/gameOver.mp3';
+// import soundOffImg from './asset/images/mute.png';
+// import musicOffImg from './asset/images/musicOff.png'
 
 const AppContainer = styled.div`
   width: ${props => props.appWidth}px;
@@ -162,6 +164,8 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
             Next: <NextPieceGrid board={board} />
             <div style={{ margin: "20px 0" }}>Level: {level}</div>
             <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
+            {/* <img src={musicOffImg} width="20px" height="20px"/>
+            <img src={soundOffImg} width="20px" height="20px"/> */}
             {/* <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div> */}
           </InfoPanelContainer>
         </DisplayContainer>

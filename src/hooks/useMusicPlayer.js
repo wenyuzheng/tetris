@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import musicFile from '../asset/music.mp3';
+import musicFile from '../asset/sound/music.mp3';
 
 const music = new Audio(musicFile);
 
