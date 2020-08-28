@@ -1,5 +1,5 @@
 class Piece {
-    constructor(newCellsArr) {
+    constructor(newCellsArr, lastRotation, rotationSequence) {
         this.pieceCells = newCellsArr;
         for (let i = 0; i < this.pieceCells.length; i++) {
             if (this.pieceCells[i].isCenter) {
@@ -10,6 +10,8 @@ class Piece {
         if (!this.centerCell) {
             this.centerCell = this.pieceCells[0];
         }
+        this.lastRotation = lastRotation;
+        this.rotationSequence = rotationSequence;
     }
 
     minX() {
@@ -46,10 +48,20 @@ class Piece {
         }
     }
 
-    rotate(center, direction) {
+    baseRotate(center, direction) {
         this.pieceCells.forEach((cell) => {
-            cell.rotate(center, direction);
+            if (!direction) {
+                // do nothing
+            } else {
+                cell.rotate(center, direction);
+            }
         })
+    }
+
+    rotate(center) {
+        const nextRotation = this.rotationSequence[this.lastRotation];
+        this.lastRotation = nextRotation;
+        this.baseRotate(center, nextRotation);
     }
 }
 

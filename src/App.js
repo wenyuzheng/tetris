@@ -4,7 +4,7 @@ import _ from "lodash";
 import styled from 'styled-components';
 
 import Board from './lib/lib/Board';
-import generatePiece from './lib/lib/generatePiece';
+import generateRealPiece from './lib/lib/generatePiece';
 
 import Buttons from './components/gamepage/Buttons';
 import Grid from './components/gamepage/Grid';
@@ -49,7 +49,7 @@ const InfoPanelContainer = styled.div`
 
 const xMax = 10;
 const yMax = 20;
-const myBoard = new Board(null, [], generatePiece(xMax, yMax), xMax, yMax);
+const myBoard = new Board(null, [], generateRealPiece(), xMax, yMax);
 
 const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
 
@@ -69,7 +69,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
 
   const currToNextPieceHandler = () => {
     myBoard.currPiece = myBoard.nextPiece;
-    myBoard.nextPiece = generatePiece(xMax, yMax);
+    myBoard.nextPiece = generateRealPiece();
     setBoard(_.cloneDeep(myBoard));
   }
 

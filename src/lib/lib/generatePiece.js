@@ -1,6 +1,11 @@
 import Cell from "./Cell";
 import Piece from "./Piece";
 import _ from 'lodash';
+import realPieces from "./realPieces";
+
+const generateRealPiece = () =>{
+    return _.cloneDeep(_.sample(realPieces));
+}
 
 const generatePiece = (xMax, yMax) => {
     const pieceCells = [generateFirstCell(xMax, yMax)];
@@ -57,4 +62,4 @@ const randomColor = () => {
     return _.sample(colors);
 }
 
-export default generatePiece;
+export default generateRealPiece;
