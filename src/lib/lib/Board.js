@@ -70,6 +70,21 @@ class Board {
         }
         return true;
     }
+
+    canMoveFurther() {
+        const pieceCopy = _.cloneDeep(this.currPiece);
+        
+        const directions = ["down", "left", "right"];
+        directions.map((direction) => {
+            pieceCopy.move(direction);
+            if (this.isValid(pieceCopy)) {
+                console.log("is valid")
+                return true
+            }
+        })
+
+        return false
+    }
     
     moveCurrPiece(direction) {
         const pieceCopy = _.cloneDeep(this.currPiece);
@@ -81,7 +96,7 @@ class Board {
     
     rotateCurrPiece(direction) {
         const pieceCopy = _.cloneDeep(this.currPiece);
-        pieceCopy.rotate(pieceCopy.centerCell, direction);
+        pieceCopy.rotate(pieceCopy.centerCell);
         if (this.isValid(pieceCopy)) {
             this.currPiece.rotate(this.currPiece.centerCell, direction);
         }

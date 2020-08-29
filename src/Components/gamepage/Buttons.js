@@ -64,7 +64,7 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPlaySo
     }
 
     const rotateHandler = () => {
-        myBoard.rotateCurrPiece("left");
+        myBoard.rotateCurrPiece();
         setBoard(_.cloneDeep(myBoard));
         setPressed((prev) => prev + " u")
     }

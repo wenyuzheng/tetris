@@ -1,6 +1,6 @@
-import Piece from "../lib/Piece";
-import Cell from '../lib/Cell';
-import Board from '../lib/Board';
+import Piece from "../lib/lib/Piece";
+import Cell from '../lib/lib/Cell';
+import Board from '../lib/lib/Board';
 import _ from 'lodash';
 
 describe("class Board", () => {
@@ -274,7 +274,7 @@ describe("class Board", () => {
     })
 
     describe("removeRow", () => {
-        it.only("remove one row at the bottom", () => {
+        it("remove one row at the bottom", () => {
             const currPiece1 = new Piece([new Cell(3, 6)]);
             const boardCells = [new Cell(1, 1), new Cell(2, 1), new Cell(3, 1), new Cell(1, 2)];
             const myBoard = new Board(currPiece1, boardCells, 3, 6);
@@ -284,13 +284,43 @@ describe("class Board", () => {
     })
 
     describe("removeFullRows", () => {
-        it.only("remove one row at the bottom", () => {
+        it("remove one row at the bottom", () => {
             const currPiece1 = new Piece([new Cell(3, 6)]);
             const boardCells = [new Cell(1, 1), new Cell(2, 1), new Cell(3, 1), new Cell(1, 2), new Cell(2, 2), new Cell(3, 2), new Cell(1, 3)];
             const myBoard = new Board(currPiece1, boardCells, 3, 6);
             const result = myBoard.removeFullRows();
             expect(myBoard.boardCells).toEqual([new Cell(1, 1)]);
             expect(result).toEqual(2);
+        })
+    })
+
+    describe.only("canMoveFurther", () => {
+        it("true can move down", () => {
+            const currPiece1 = new Piece([new Cell(3, 3), new Cell(3, 2)]);
+            const boardCells = [new Cell(4, 2), new Cell(2, 2)]
+            const myBoard = new Board(currPiece1, boardCells, 10, 15);
+            expect(myBoard.canMoveFurther()).toEqual(true);
+        })
+
+        it("true can move right", () => {
+            const currPiece1 = new Piece([new Cell(3, 1), new Cell(3, 2)]);
+            const boardCells = [new Cell(2, 2)]
+            const myBoard = new Board(currPiece1, boardCells, 10, 15);
+            expect(myBoard.canMoveFurther()).toEqual(true);
+        })
+        
+        it("true can move left", () => {
+            const currPiece1 = new Piece([new Cell(3, 1), new Cell(3, 2)]);
+            const boardCells = [new Cell(4, 2)]
+            const myBoard = new Board(currPiece1, boardCells, 10, 15);
+            expect(myBoard.canMoveFurther()).toEqual(true);
+        })
+
+        it("false", () => {
+            const currPiece1 = new Piece([new Cell(3, 1), new Cell(3, 2)]);
+            const boardCells = [new Cell(4, 2), new Cell(2, 2)]
+            const myBoard = new Board(currPiece1, boardCells, 10, 15);
+            expect(myBoard.canMoveFurther()).toEqual(false);
         })
     })
 })

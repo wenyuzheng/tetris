@@ -28,16 +28,19 @@ export default ({ setLevel, level, setDelay, setDropSpeed, totalRemovedRows } ) 
     useEffect(() => {
         setDelay(levels[level].delay)
         setDropSpeed(levels[level].dropSpeed)
+        // console.log(level)
     }, [setLevel, level]);
 
     useEffect(() => {
-        if (level <= 1 && totalRemovedRows > 5) {
+        if (level <= 1 && totalRemovedRows > 1) {
             setLevel(1);
-        } else if (level <= 2 && totalRemovedRows >= 5 && totalRemovedRows < 10) {
+        } else if (level <= 2 && totalRemovedRows >= 1 && totalRemovedRows < 10) {
             setLevel(2);
+            // console.log("set level to 2")
         } else if (totalRemovedRows >= 10) {
             setLevel(3);
         }
+        // console.log("total reoved lines changed")
     }, [totalRemovedRows]);
 
     return (
