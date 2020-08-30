@@ -72,17 +72,16 @@ class Board {
     }
 
     canMoveFurther() {
-        const pieceCopy = _.cloneDeep(this.currPiece);
-        
         const directions = ["down", "left", "right"];
-        directions.map((direction) => {
-            pieceCopy.move(direction);
+
+        let pieceCopy;
+        for (let i = 0; i < directions.length; i++) {
+            pieceCopy = _.cloneDeep(this.currPiece);
+            pieceCopy.move(directions[i]);
             if (this.isValid(pieceCopy)) {
-                console.log("is valid")
                 return true
             }
-        })
-
+        }
         return false
     }
     

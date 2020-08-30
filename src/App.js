@@ -108,6 +108,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
 
   useEffect(() => {
     if (!endOfGame && !timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
+      myBoard.canMoveFurther() ? setDelay(2000) : setDelay(0); //set delay to levels[level].delay if true
       setTimerStarted(true);
     }
     setDoFinalCheck(false);
