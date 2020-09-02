@@ -4,7 +4,7 @@ import _ from "lodash";
 import styled from 'styled-components';
 
 import Board from './lib/lib/Board';
-import generateRealPiece from './lib/lib/generatePiece';
+import generateRealPiece from './lib/lib/generateRealPiece';
 
 import Buttons from './components/gamepage/Buttons';
 import Grid from './components/gamepage/Grid';
@@ -22,6 +22,7 @@ import clearSnd from './asset/sound/clear.mp3';
 import gameOverSnd from './asset/sound/gameOver.mp3';
 import setLevels from './lib/lib/setLevels';
 import autoDown from './lib/lib/autoDown';
+import delaySetBoard from './lib/lib/delaySetBoard';
 // import soundOffImg from './asset/images/mute.png';
 // import musicOffImg from './asset/images/musicOff.png'
 
@@ -53,7 +54,23 @@ const xMax = 10;
 const yMax = 20;
 const myBoard = new Board(generateRealPiece(), [], generateRealPiece(), xMax, yMax);
 
-const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
+const App = () => {
+
+  const [screenWidth, screenHeight] = useWindowSize();
+
+  const appWidth = Math.min(screenWidth, 420);
+  const appHeight = screenHeight;
+
+  const displayWidth = appWidth;
+  const displayHeight = appHeight * 0.55;
+
+  const squareLength = (displayHeight - 20 - 19) / 20;
+
+  const infoPanelWidth = displayWidth - 20 - squareLength * 10 - 9;
+  const infoPanelHeight = displayHeight - 20;
+
+  const buttonsContainerWidth = appWidth;
+  const buttonsContainerHeight = appHeight - displayHeight;
 
   const [board, setBoard] = useState(_.cloneDeep(myBoard));
   const [endOfGame, setEndOfGame] = useState(false);
@@ -61,6 +78,7 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   const [totalRemovedRows, setTotalRemovedRows] = useState(0);
   const [displayStartPage, setDisplayStartPage] = useState(true);
   const [dropSpeed, setDropSpeed] = useState(1000);
+  const [delay, setDelay] = useState(2000);
   const [level, setLevel] = useState(1);
   const [pressed, setPressed] = useState("");
   const [displayPausePage, setDisplayPausePage] = useState(false);
@@ -94,25 +112,6 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     }
   }, [board, playSound])
 
-  useEffect(() => {
-    if (!endOfGame && !timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
-      myBoard.canMoveFurther() ? setDelay(2000) : setDelay(0); //set delay to levels[level].delay if true
-      setTimerStarted(true);
-    }
-    setDoFinalCheck(false);
-  }, [board, setTimerStarted, doFinalCheck])
-
-  useEffect(() => {
-    if(doFinalCheck) {
-      if (!endOfGame && myBoard.isPieceAtBottom()) {
-        myBoard.boardCells.push(...myBoard.currPiece.pieceCells);
-        setTotalRemovedRows(totalRemovedRows + myBoard.removeFullRows());
-        currToNextPieceHandler();
-        setDoFinalCheck(false);
-      }
-    }
-  }, [doFinalCheck])
-
   const startGameHandler = () => {
     myBoard.boardCells = [];
     currToNextPieceHandler();
@@ -123,22 +122,8 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
 
   setLevels(level, setLevel, setDelay, setDropSpeed, totalRemovedRows);
   autoDown(pauseGame, myBoard, setBoard, dropSpeed);
-
-  const [screenWidth, screenHeight] = useWindowSize();
-
-  const appWidth = Math.min(screenWidth, 420);
-  const appHeight = screenHeight;
-
-  const displayWidth = appWidth;
-  const displayHeight = appHeight * 0.55;
-
-  const squareLength = (displayHeight - 20 - 19) / 20;
-
-  const infoPanelWidth = displayWidth - 20 - squareLength * 10 - 9;
-  const infoPanelHeight = displayHeight - 20;
-
-  const buttonsContainerWidth = appWidth;
-  const buttonsContainerHeight = appHeight - displayHeight;
+  delaySetBoard(delay, setDelay, endOfGame, myBoard, board, 
+    totalRemovedRows, setTotalRemovedRows, currToNextPieceHandler);
 
   if (myBoard.currPiece) {
     return <>

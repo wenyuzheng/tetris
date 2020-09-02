@@ -2,19 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Store from './Store';
 import {
   BrowserRouter,
   Switch,
   Route
 } from "react-router-dom";
 import LeaderBoard from './components/startpage/LeaderBoard';
+import App from './App';
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/leaderboard" component={LeaderBoard}/>
-      <Route defalut path="/" component={Store} />
+      <Route defalut path="/" component={App} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
