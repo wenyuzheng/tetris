@@ -89,7 +89,6 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPlaySo
 
     const preventContextMenu = (e) => {
         e.preventDefault();
-        
         // setPressed((prev) => prev + " CM")
     }
     
@@ -98,7 +97,7 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPlaySo
         <ButtonsContainer buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}>
             <OptionButtonsContainer optionButtonsContainerWidth={optionButtonsContainerWidth} optionButtonsContainerHeight={optionButtonsContainerHeight}>
                 <OptionButton {...useMusicPlayer(pauseGame)} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Music</OptionButton>
-                <OptionButton onClick={() => { setPlaySound(!playSound) }} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Sound</OptionButton>
+                <OptionButton onClick={() => { setPlaySound(!playSound)}} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>Sound</OptionButton>
                 <OptionButton onClick={pauseHandler} optionButtonsWidth={optionButtonsWidth} optionButtonsHeight={optionButtonsHeight}>{pauseGame ? "Play" : "Pause"}</OptionButton>
             </OptionButtonsContainer>
             <MoveButtonsGrid moveButtonsContainerHeight={moveButtonsContainerHeight} >
@@ -106,12 +105,6 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPlaySo
                 <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...useLongPress(leftHandler, 100)} style={{ gridArea: "2 / 1 / 3 / 2" }} moveButtonsHeight={moveButtonsHeight}>Left</MoveCurrPieceButton>
                 <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...useLongPress(rightHandler, 100)} style={{ gridArea: "2 / 3 / 3 / 4" }} moveButtonsHeight={moveButtonsHeight}>Right</MoveCurrPieceButton>
                 <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...useLongPress(downHandler, 100)} style={{ gridArea: "3 / 2 / 4 / 3" }} moveButtonsHeight={moveButtonsHeight}>Down</MoveCurrPieceButton>
- 
-                {/* <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)}  onClick={rotateHandler} style={{ gridArea: "1 / 2 / 2 / 3" }} moveButtonsHeight={moveButtonsHeight}>Rotate</MoveCurrPieceButton>
-                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} onClick={leftHandler} style={{ gridArea: "2 / 1 / 3 / 2" }} moveButtonsHeight={moveButtonsHeight}>Left</MoveCurrPieceButton>
-                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} onClick={rightHandler} style={{ gridArea: "2 / 3 / 3 / 4" }} moveButtonsHeight={moveButtonsHeight}>Right</MoveCurrPieceButton>
-                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} onClick={downHandler} style={{ gridArea: "3 / 2 / 4 / 3" }} moveButtonsHeight={moveButtonsHeight}>Down</MoveCurrPieceButton> */}
-            
             </MoveButtonsGrid>
         </ButtonsContainer>
     )

@@ -5,6 +5,10 @@ import styled from 'styled-components';
 
 import Board from './lib/lib/Board';
 import generateRealPiece from './lib/lib/generateRealPiece';
+import setLevels from './lib/lib/setLevels';
+import autoDown from './lib/lib/autoDown';
+import delaySetBoard from './lib/lib/delaySetBoard';
+import sounds from './lib/lib/sounds';
 
 import Buttons from './components/gamepage/Buttons';
 import Grid from './components/gamepage/Grid';
@@ -17,14 +21,7 @@ import PausePage from './scenes/PausePage';
 
 import useWindowSize from './hooks/useWindowSize';
 
-import useSound from 'use-sound';
-import clearSnd from './asset/sound/clear.mp3';
-import gameOverSnd from './asset/sound/gameOver.mp3';
-import setLevels from './lib/lib/setLevels';
-import autoDown from './lib/lib/autoDown';
-import delaySetBoard from './lib/lib/delaySetBoard';
 // import soundOffImg from './asset/images/mute.png';
-// import musicOffImg from './asset/images/musicOff.png'
 
 const AppContainer = styled.div`
   width: ${props => props.appWidth}px;
@@ -84,9 +81,6 @@ const App = () => {
   const [displayPausePage, setDisplayPausePage] = useState(false);
   const [playSound, setPlaySound] = useState(true);
 
-  const [clearSound] = useSound(clearSnd);
-  const [gameOverSound] = useSound(gameOverSnd);
-
   const currToNextPieceHandler = () => {
     myBoard.currPiece = myBoard.nextPiece;
     myBoard.nextPiece = generateRealPiece();
@@ -94,23 +88,14 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (playSound) {
-      clearSound();
-    }
-  }, [totalRemovedRows, playSound])
-
-  useEffect(() => {
     for (let i = 0; i < myBoard.boardCells.length; i++) {
       if (myBoard.boardCells[i].y >= yMax) {
         setEndOfGame(true);
         setPauseGame(true);
         setLevel(1);
-        if (playSound) {
-          gameOverSound();
-        }
       }
     }
-  }, [board, playSound])
+  }, [board])
 
   const startGameHandler = () => {
     myBoard.boardCells = [];
@@ -124,6 +109,7 @@ const App = () => {
   autoDown(pauseGame, myBoard, setBoard, dropSpeed);
   delaySetBoard(delay, setDelay, endOfGame, myBoard, board, 
     totalRemovedRows, setTotalRemovedRows, currToNextPieceHandler);
+  sounds(playSound, totalRemovedRows, endOfGame);
 
   if (myBoard.currPiece) {
     return <>
