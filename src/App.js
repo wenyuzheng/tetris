@@ -49,7 +49,7 @@ const InfoPanelContainer = styled.div`
 
 const xMax = 10;
 const yMax = 20;
-const myBoard = new Board(null, [], generateRealPiece(), xMax, yMax);
+const myBoard = new Board(generateRealPiece(), [], generateRealPiece(), xMax, yMax);
 
 const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerStarted }) => {
 
@@ -72,10 +72,6 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     myBoard.nextPiece = generateRealPiece();
     setBoard(_.cloneDeep(myBoard));
   }
-
-  useEffect(() => {
-    currToNextPieceHandler();
-  }, [])
 
   useEffect(() => {
     if (playSound) {
@@ -127,10 +123,10 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
 
   const startGameHandler = () => {
     myBoard.boardCells = [];
+    currToNextPieceHandler();
     setBoard(_.cloneDeep(myBoard));
     setDisplayStartPage(false); 
     setPauseGame(false);
-    setDisplayPausePage(false);
   }
 
   const [screenWidth, screenHeight] = useWindowSize();

@@ -89,8 +89,10 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPlaySo
 
     const preventContextMenu = (e) => {
         e.preventDefault();
-        setPressed((prev) => prev + " CM")
+        
+        // setPressed((prev) => prev + " CM")
     }
+    
 
     return (
         <ButtonsContainer buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}>
@@ -104,6 +106,12 @@ const Buttons = ({ setDisplayPausePage, setPressed, myBoard, setBoard, setPlaySo
                 <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...useLongPress(leftHandler, 100)} style={{ gridArea: "2 / 1 / 3 / 2" }} moveButtonsHeight={moveButtonsHeight}>Left</MoveCurrPieceButton>
                 <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...useLongPress(rightHandler, 100)} style={{ gridArea: "2 / 3 / 3 / 4" }} moveButtonsHeight={moveButtonsHeight}>Right</MoveCurrPieceButton>
                 <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} {...useLongPress(downHandler, 100)} style={{ gridArea: "3 / 2 / 4 / 3" }} moveButtonsHeight={moveButtonsHeight}>Down</MoveCurrPieceButton>
+ 
+                {/* <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)}  onClick={rotateHandler} style={{ gridArea: "1 / 2 / 2 / 3" }} moveButtonsHeight={moveButtonsHeight}>Rotate</MoveCurrPieceButton>
+                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} onClick={leftHandler} style={{ gridArea: "2 / 1 / 3 / 2" }} moveButtonsHeight={moveButtonsHeight}>Left</MoveCurrPieceButton>
+                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} onClick={rightHandler} style={{ gridArea: "2 / 3 / 3 / 4" }} moveButtonsHeight={moveButtonsHeight}>Right</MoveCurrPieceButton>
+                <MoveCurrPieceButton onContextMenu={(e) => preventContextMenu(e)} onClick={downHandler} style={{ gridArea: "3 / 2 / 4 / 3" }} moveButtonsHeight={moveButtonsHeight}>Down</MoveCurrPieceButton> */}
+            
             </MoveButtonsGrid>
         </ButtonsContainer>
     )

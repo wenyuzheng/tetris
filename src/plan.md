@@ -24,11 +24,7 @@
     * moveRotateRight(center?) //later
 
 # To do: 
-1. buttons mouseup + mousedown
-2. css: @media queries
-3. sound effect
-4. cannot move when pause (maybe: stop music when pause?)
-5. level: set long press moving speed into level selection
-6. styled div for nextPieceGrid
-
-1. paused page [later]
+1. different speed when hold and click
+2. pausepage start button
+3. audio no sound on ios devices
+4. change level when removedLines increases
