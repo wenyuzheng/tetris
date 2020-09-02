@@ -20,6 +20,8 @@ import useWindowSize from './hooks/useWindowSize';
 import useSound from 'use-sound';
 import clearSnd from './asset/sound/clear.mp3';
 import gameOverSnd from './asset/sound/gameOver.mp3';
+import setLevels from './lib/lib/setLevels';
+import autoDown from './lib/lib/autoDown';
 // import soundOffImg from './asset/images/mute.png';
 // import musicOffImg from './asset/images/musicOff.png'
 
@@ -80,16 +82,6 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
   }, [totalRemovedRows, playSound])
 
   useEffect(() => {
-    if (!pauseGame) {
-      const autoDown = setInterval(() => {
-        myBoard.moveCurrPiece("down");
-        setBoard(_.cloneDeep(myBoard));
-      }, dropSpeed)
-      return () => clearInterval(autoDown)
-    }
-  }, [pauseGame])
-
-  useEffect(() => {
     for (let i = 0; i < myBoard.boardCells.length; i++) {
       if (myBoard.boardCells[i].y >= yMax) {
         setEndOfGame(true);
@@ -129,6 +121,9 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
     setPauseGame(false);
   }
 
+  setLevels(level, setLevel, setDelay, setDropSpeed, totalRemovedRows);
+  autoDown(pauseGame, myBoard, setBoard, dropSpeed);
+
   const [screenWidth, screenHeight] = useWindowSize();
 
   const appWidth = Math.min(screenWidth, 420);
@@ -150,9 +145,8 @@ const App = ({ setDelay, doFinalCheck, setDoFinalCheck, timerStarted, setTimerSt
       <AppContainer appWidth={appWidth} appHeight={appHeight}>
 
         {displayStartPage ? 
-        <StartPage appWidth={appWidth} appHeight={appHeight} 
-          setDelay={setDelay} setDropSpeed={setDropSpeed} level={level} setLevel={setLevel} 
-          totalRemovedRows={totalRemovedRows} startGameHandler={startGameHandler}/>
+        <StartPage appWidth={appWidth} appHeight={appHeight} level={level} 
+          setLevel={setLevel} startGameHandler={startGameHandler}/>
         : null }
 
         <DisplayContainer displayWidth={displayWidth} displayHeight={displayHeight}>

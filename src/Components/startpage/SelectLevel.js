@@ -8,41 +8,8 @@ const style = {
     margin: "10px auto",
 }
 
-const levels = {
-    1: {
-        delay: 2000,
-        dropSpeed: 1000,
-    },
-    2: {
-        delay: 1500,
-        dropSpeed: 500,
-    },
-    3: {
-        delay: 800,
-        dropSpeed: 300,
-    },
-}
-
-export default ({ setLevel, level, setDelay, setDropSpeed, totalRemovedRows } ) => {
+export default ({ setLevel, level } ) => {
     
-    useEffect(() => {
-        setDelay(levels[level].delay)
-        setDropSpeed(levels[level].dropSpeed)
-        // console.log(level)
-    }, [setLevel, level]);
-
-    useEffect(() => {
-        if (level <= 1 && totalRemovedRows > 1) {
-            setLevel(1);
-        } else if (level <= 2 && totalRemovedRows >= 1 && totalRemovedRows < 10) {
-            setLevel(2);
-            // console.log("set level to 2")
-        } else if (totalRemovedRows >= 10) {
-            setLevel(3);
-        }
-        // console.log("total reoved lines changed")
-    }, [totalRemovedRows]);
-
     return (
         <div>
             <select style={style} value={level} onChange={e => setLevel(e.target.value)}>
