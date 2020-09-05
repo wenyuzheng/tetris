@@ -9,7 +9,7 @@ export default (playSound, totalRemovedRows, endOfGame) => {
     const [gameOverSound] = useSound(gameOverSnd);
 
     useEffect(() => {
-        if (playSound) {
+        if (playSound && totalRemovedRows) {
             clearSound();
         }
     }, [totalRemovedRows, playSound])

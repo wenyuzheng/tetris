@@ -9,10 +9,12 @@ import {
 } from "react-router-dom";
 import LeaderBoard from './components/startpage/LeaderBoard';
 import App from './App';
+import Test from './Test';
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
+      <Route path="/test" component={Test} />
       <Route path="/leaderboard" component={LeaderBoard}/>
       <Route defalut path="/" component={App} />
     </Switch>

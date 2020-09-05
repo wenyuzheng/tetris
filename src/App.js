@@ -21,7 +21,8 @@ import PausePage from './scenes/PausePage';
 
 import useWindowSize from './hooks/useWindowSize';
 
-// import soundOffImg from './asset/images/mute.png';
+import soundOffImg from './asset/images/mute.png';
+import musicOffImg from './asset/images/musicOff.png'
 
 const AppContainer = styled.div`
   width: ${props => props.appWidth}px;
@@ -85,6 +86,7 @@ const App = () => {
     myBoard.currPiece = myBoard.nextPiece;
     myBoard.nextPiece = generateRealPiece();
     setBoard(_.cloneDeep(myBoard));
+    setPressed("");
   }
 
   useEffect(() => {
@@ -126,9 +128,9 @@ const App = () => {
             Next: <NextPieceGrid board={board} />
             <div style={{ margin: "20px 0" }}>Level: {level}</div>
             <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
-            {/* <img src={musicOffImg} width="20px" height="20px"/>
-            <img src={soundOffImg} width="20px" height="20px"/> */}
-            {/* <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div> */}
+            {/* <img src={musicOffImg} width="20px" height="20px"/> */}
+            {playSound ? null : <img src={soundOffImg} alt="sound off icon" width="20px" height="20px"/>}
+            <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div>
           </InfoPanelContainer>
         </DisplayContainer>
         

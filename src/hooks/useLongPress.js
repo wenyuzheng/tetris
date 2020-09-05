@@ -1,83 +1,46 @@
 import { useState, useEffect } from 'react';
 
-export default (callback, ms) => {
+export default (callback) => {
+    const [longPress, setLongPress] = useState(false)
 
-    const [startLongPress, setStartLongPress] = useState(false);
+    const [myInterval, setMyInterval] = useState(null)
+    const [myTimeout, setMyTimeout] = useState(null)
+
+    const threshHold = 250
+    const repeatInterval = 20
 
     useEffect(() => {
-        let timeOut;
-        if (startLongPress) {
-            timeOut = setTimeout(() => callback(), ms);
-        } else {
-            clearTimeout(timeOut);
+        if (longPress && !myInterval) {
+            setMyInterval(setInterval(() => {
+                callback();
+            }, repeatInterval))
         }
+        if (!longPress && myInterval) {
+            clearInterval(myInterval)
+            setMyInterval(null)
+        }
+    }, [longPress, myInterval])
 
-        return () => {
-            clearTimeout(timeOut);
-        };
-    }, [callback, ms, startLongPress]);
+    const startHandler = () => {
+        setMyTimeout(setTimeout(() => {
+            setLongPress(true)
+        }, threshHold))
+    }
+
+    const endHandler = () => {
+        clearTimeout(myTimeout)
+        setMyTimeout(null)
+        if (longPress) {
+            setLongPress(false)
+        }
+    }
 
     return {
-        onMouseDown: () => setStartLongPress(true),
-        onMouseUp: () => setStartLongPress(false),
-        onMouseLeave: () => setStartLongPress(false),
-        onTouchStart: () => setStartLongPress(true),
-        onTouchEnd: () => setStartLongPress(false),
+        onMouseDown: () => startHandler(),
+        onMouseUp: () => endHandler(),
+        onMouseLeave: () => endHandler(),
+        onTouchStart: () => startHandler(),
+        onTouchEnd: () => endHandler(),
         onClick: () => callback(),
     };
 }
-
-// import { useState, useEffect } from 'react';
-
-// export default (callback, ms) => {
-
-//     const [startLongPress, setStartLongPress] = useState(false);
-//     const [startFireCallback, setStartFireCallback] = useState(false);
-
-//     useEffect(() => {
-//         let longPressTimeOut;
-
-//         const startFire = () => {
-//             let timeOut;
-//             if (startFireCallback) {
-//                 timeOut = setTimeout(() => callback(), ms);
-//             } else {
-//                 clearTimeout(timeOut);
-//             }
-
-//             return () => {
-//                 clearTimeout(timeOut);
-//             };
-//         }
-
-//         if (startLongPress) {
-//             longPressTimeOut = setTimeout(startFire, 200);
-//         } else {
-//             clearTimeout(longPressTimeOut);
-//         }
-
-//         return () => {
-//             clearTimeout(longPressTimeOut);
-//         };
-
-//     }, [callback, ms, startFireCallback, startLongPress]);
-
-//     const start = () => {
-//         setStartLongPress(true);
-//         setStartFireCallback(true);
-//     }
-
-//     const stop = () => {
-//         setStartLongPress(false);
-//         setStartFireCallback(false);
-//     }
-
-//     return {
-//         onMouseDown: () => start(),
-//         onMouseUp: () => stop(),
-//         onMouseLeave: () => stop(),
-//         onTouchStart: () => start(),
-//         onTouchEnd: () => stop(),
-//         onClick: () => callback(),
-//     };
-// }
