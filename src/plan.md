@@ -24,7 +24,9 @@
     * moveRotateRight(center?) //later
 
 # To do: 
-1. different speed when hold and click
+1. different speed when hold and click [done]
 2. pausepage start button [done]
-3. audio no sound on ios devices
-4. change level when removedLines increases
+3. audio no sound on ios devices [done]
+4. change level when removedLines increases [done]
+5. level 0 [done]
+6. sound Effect

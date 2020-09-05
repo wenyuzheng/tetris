@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
 
-export default (delay, setDelay, endOfGame, myBoard, board, totalRemovedRows, setTotalRemovedRows, currToNextPieceHandler) => {
+export default (delay, endOfGame, myBoard, board, totalRemovedRows, setTotalRemovedRows, currToNextPieceHandler) => {
 
     const [timerStarted, setTimerStarted] = useState(false);
     const [doFinalCheck, setDoFinalCheck] = useState(false);
+    const [newDelay, setNewDelay] = useState(delay);
 
     useEffect(() => {
         if (timerStarted) {
             setTimeout(() => {
                 setTimerStarted(false);
                 setDoFinalCheck(true);
-            }, delay)
+            }, newDelay)
         }
-    }, [timerStarted, delay])
+    }, [timerStarted, newDelay])
 
     useEffect(() => {
         if (!endOfGame && !timerStarted && myBoard.isPieceAtBottom() && !doFinalCheck) {
-            myBoard.canMoveFurther() ? setDelay(2000) : setDelay(0); //set delay to levels[level].delay if true
+            myBoard.canMoveFurther() ? setNewDelay(delay) : setNewDelay(0);
             setTimerStarted(true);
         }
         setDoFinalCheck(false);

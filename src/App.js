@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import _ from "lodash";
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import setLevels from './lib/lib/setLevels';
 import autoDown from './lib/lib/autoDown';
 import delaySetBoard from './lib/lib/delaySetBoard';
 import sounds from './lib/lib/sounds';
+import endGame from './lib/lib/endGame';
 
 import Buttons from './components/gamepage/Buttons';
 import Grid from './components/gamepage/Grid';
@@ -22,7 +23,7 @@ import PausePage from './scenes/PausePage';
 import useWindowSize from './hooks/useWindowSize';
 
 import soundOffImg from './asset/images/mute.png';
-import musicOffImg from './asset/images/musicOff.png'
+import musicOffImg from './asset/images/musicOff.png';
 
 const AppContainer = styled.div`
   width: ${props => props.appWidth}px;
@@ -81,6 +82,7 @@ const App = () => {
   const [pressed, setPressed] = useState("");
   const [displayPausePage, setDisplayPausePage] = useState(false);
   const [playSound, setPlaySound] = useState(true);
+  const [playMusic, setPlayMusic] = useState(false);
 
   const currToNextPieceHandler = () => {
     myBoard.currPiece = myBoard.nextPiece;
@@ -88,16 +90,6 @@ const App = () => {
     setBoard(_.cloneDeep(myBoard));
     setPressed("");
   }
-
-  useEffect(() => {
-    for (let i = 0; i < myBoard.boardCells.length; i++) {
-      if (myBoard.boardCells[i].y >= yMax) {
-        setEndOfGame(true);
-        setPauseGame(true);
-        setLevel(1);
-      }
-    }
-  }, [board])
 
   const startGameHandler = () => {
     myBoard.boardCells = [];
@@ -108,9 +100,14 @@ const App = () => {
   }
 
   setLevels(level, setLevel, setDelay, setDropSpeed, totalRemovedRows);
-  autoDown(pauseGame, myBoard, setBoard, dropSpeed);
-  delaySetBoard(delay, setDelay, endOfGame, myBoard, board, 
+
+  autoDown(pauseGame, myBoard, setBoard, dropSpeed, level);
+
+  delaySetBoard(delay, endOfGame, myBoard, board, 
     totalRemovedRows, setTotalRemovedRows, currToNextPieceHandler);
+
+  endGame(board, myBoard, yMax, setEndOfGame, setPauseGame, setLevel);
+
   sounds(playSound, totalRemovedRows, endOfGame);
 
   if (myBoard.currPiece) {
@@ -128,20 +125,22 @@ const App = () => {
             Next: <NextPieceGrid board={board} />
             <div style={{ margin: "20px 0" }}>Level: {level}</div>
             <div style={{ margin: "20px 0" }}>Score: {totalRemovedRows}</div>
-            {/* <img src={musicOffImg} width="20px" height="20px"/> */}
-            {playSound ? null : <img src={soundOffImg} alt="sound off icon" width="20px" height="20px"/>}
-            <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div>
+            {playMusic ? null : <img src={musicOffImg} alt="music off icon" width="20px" height="20px" style={{ margin: "20px 10px" }} />}
+            {playSound ? null : <img src={soundOffImg} alt="sound off icon" width="20px" height="20px" style={{ margin: "20px 10px" }} />}
+            {/* <div style={{ margin: "20px 0", height: "200px", width: "150px", border: "1px solid red", overflow: "scroll" }}>{pressed}</div> */}
           </InfoPanelContainer>
         </DisplayContainer>
         
         <Buttons displayPausePage={displayPausePage} setDisplayPausePage={setDisplayPausePage} 
           setPressed={setPressed} myBoard={myBoard} setBoard={setBoard} setPauseGame={setPauseGame} 
           pauseGame={pauseGame} playSound={playSound} setPlaySound={setPlaySound}
+          playMusic={playMusic} setPlayMusic={setPlayMusic}
           buttonsContainerWidth={buttonsContainerWidth} buttonsContainerHeight={buttonsContainerHeight}/>
         
         {displayPausePage ? 
         <PausePage myBoard={myBoard} setBoard={setBoard} setDisplayPausePage={setDisplayPausePage} 
-          setPauseGame={setPauseGame} setDisplayStartPage={setDisplayStartPage}/> 
+            setPauseGame={setPauseGame} setDisplayStartPage={setDisplayStartPage} 
+            setLevel={setLevel} setTotalRemovedRows={setTotalRemovedRows}/> 
         : null}
         
         {endOfGame ? 

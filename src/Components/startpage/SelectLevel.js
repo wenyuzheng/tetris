@@ -13,6 +13,7 @@ export default ({ setLevel, level } ) => {
     return (
         <div>
             <select style={style} value={level} onChange={e => setLevel(e.target.value)}>
+                <option value="0">Level 0</option>
                 <option default value="1">Level 1</option>
                 <option value="2">Level 2</option>
                 <option value="3">Level 3</option>

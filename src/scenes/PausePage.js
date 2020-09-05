@@ -12,6 +12,8 @@ const PausePage = (props) => {
         props.myBoard.boardCells.push(...props.myBoard.currPiece.pieceCells);
         props.setDisplayStartPage(true);
         props.setDisplayPausePage(false);
+        props.setLevel(1);
+        props.setTotalRemovedRows(0);
     }
 
     return (

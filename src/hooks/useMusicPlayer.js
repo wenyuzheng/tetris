@@ -3,9 +3,8 @@ import musicFile from '../asset/sound/music.mp3';
 
 const music = new Audio(musicFile);
 
-const useMusicPlayer = (pauseGame) => {
+const useMusicPlayer = (pauseGame, setPlayMusic, playMusic) => {
 
-    const [playMusic, setPlayMusic] = useState(false);
     const [firstPlay, setFirstPlay] = useState(true);
 
     useEffect(() => {

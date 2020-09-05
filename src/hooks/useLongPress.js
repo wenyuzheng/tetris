@@ -7,7 +7,7 @@ export default (callback) => {
     const [myTimeout, setMyTimeout] = useState(null)
 
     const threshHold = 250
-    const repeatInterval = 20
+    const repeatInterval = 50
 
     useEffect(() => {
         if (longPress && !myInterval) {
